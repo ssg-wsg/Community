@@ -1,2 +1,0 @@
-# sampleUtil
-Sample codes
