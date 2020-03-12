@@ -9,7 +9,7 @@ This is a sample guide when creating an MTLS Application in Developer Portal by 
 
 To use API with “Authentication” = “Certificate”
 ------------------------------------------------
-1. When Create New App in Developer Portal, choose “Certificate” as Authentication type. This create an app that uses Mutual TLS authentication.
+1. After clicking “Create New App” in Developer Portal, choose “Certificate” as Authentication type. This create an app that uses Mutual TLS authentication.
 
 2. Subscribe to APIs required.
                                 
@@ -21,8 +21,10 @@ To use API with “Authentication” = “Certificate”
 
 4. In Developer Portal, go to Credentials, browse to find and upload the generated Self-Signed Certificate (cert.pem) 
 
-5. Calling API using Postman or Curl:
+5. Calling API using Postman, Curl or SampleCode.js (In sampleCode folder):
 * Need to provide the certificate that was uploaded to the Developer Portal.
+
+    **[SampleCode.js]** Refer to “Sample Code User Guide.pdf” in sampleCode folder.
 
     **[Postman]** Refer to https://learning.getpostman.com/docs/postman/sending-api-requests/certificates/ 
 
@@ -57,7 +59,7 @@ To use API with “Encryption” = “AES256” (API Request and/or Response Pay
          Key in (Base64) : <Generated Encryption Key>
          Original String :  <Payload (Request) to encrypt> -> Trigger Encrypt 
          
-- Use Postman or Curl to call the API
+- Use Postman, Curl or SampleCode.js (In sampleCode folder) to call the API
 - Copy the **Encrypted String** and use in **Body** of API request                                                
                       
 5. To test Decryption of Response (if encrypted)
