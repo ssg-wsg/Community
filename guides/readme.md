@@ -24,8 +24,6 @@ To use API with “Authentication” = “Certificate”
 5. Calling API using Postman, Curl or SampleCode.js (In sampleCode folder):
 * Need to provide the certificate that was uploaded to the Developer Portal.
 
-    **[SampleCode.js]** Refer to “Sample Code User Guide.pdf” in sampleCode folder.
-
     **[Postman]** Refer to https://learning.getpostman.com/docs/postman/sending-api-requests/certificates/ 
 
       Under File -> Settings -> Certificates, Add Certificate for the Client Certificates
