@@ -2,7 +2,7 @@
 INTRODUCTION
 ------------
 
-This is a sample guide when creating an MTLS Application in Developer Portal by providing the Client Certificate and adding an Encryption Key to the Application.
+This is a sample guide when creating a Certificate (MTLS) Application in Developer Portal (https://developer.ssg-wsg.sg) by providing the Client Certificate and adding an Encryption Key to the Application.
 
 ------------
 
