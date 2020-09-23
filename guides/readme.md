@@ -17,7 +17,7 @@ OTHER INFORMATION
  * For more information on our available APIs, visit our API documentation:
    https://developer.ssg-wsg.sg/webapp/api-discovery
 
- * To other frequently asked questions, visit our FAQs page:
+ * For other frequently asked questions, visit our FAQs page:
    https://developer.ssg-wsg.sg/webapp/faq
 
  * If you have specific technical queries, you may also hop over to Stack Overflow for other techincal discussions:
