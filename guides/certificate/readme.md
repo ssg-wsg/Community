@@ -15,7 +15,7 @@ To use API with “Authentication” = “Certificate”
                                 
 3. Generate Self-Signed Certificate:
 * Download and install OpenSSL for Windows.
-* Run in command prompt:  **_openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 –nodes_**
+* Run in command prompt:  **_openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes_**
 * Enter info required for certificate request in command prompt
 * Note the location of the generated key.pem and cert.pem files
 
