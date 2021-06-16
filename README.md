@@ -2,7 +2,7 @@
 INTRODUCTION
 ------------
 
-This repository contains sample codes to support your app development on SSG-WSG Developer Portal (https://developer.ssg-wsg.sg).
+This repository contains guides to support your app development on SSG-WSG Developer Portal (https://developer.ssg-wsg.sg).
 
 -----------------
 OTHER INFORMATION
