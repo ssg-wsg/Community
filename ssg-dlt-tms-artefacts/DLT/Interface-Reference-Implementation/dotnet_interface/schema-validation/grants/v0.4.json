@@ -1,0 +1,668 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "header": {
+                "eventType": "Grants",
+                "primaryKey": "TGS-0026008-ESS0118316H",
+                "secondaryKey": "10026",
+                "tertiaryKey": "GRN-2006-000462",
+                "trainingPartnerUen": "T08GB0032G",
+                "trainingPartnerCode": "T08GB0032G-01",
+                "schemaLocation": "<TBC>",
+                "schemaVersion": "TGS_v1.0"
+            },
+            "payload": {
+                "grants": {
+                    "enrolment": {
+                        "referenceNumber": "ENR-1912-000123"
+                    },
+                    "grantAmount": {
+                        "estimated": "SGD 100.5",
+                        "paid": "SGD 80.5"
+                    },
+                    "sponsoringAgency": {
+                        "uen": "116GB0003C",
+                        "name": " SkillsFuture Singapore"
+                    },
+                    "fundingScheme": {
+                        "code": "MCES",
+                        "description": "Mid-Career Enhanced Subsidy"
+                    },
+                    "fundingComponent": {
+                        "code": "CF",
+                        "description": "Course Fees"
+                    },
+                    "grantStatus": "Grant Processing",
+                    "referenceNumber": "GRN-2006-000462"
+                }
+            },
+            "publicPayload": {
+                "tags": [
+                    "TBC"
+                ],
+                "source": {
+                    "dateTime": "2020-05-04 20:58:17",
+                    "timeStampInMilliSeconds": "1588597097880"
+                },
+                "ack": {
+                    "dateTime": "-1",
+                    "timeStampInMilliSeconds": "-1"
+                }
+            },
+            "dltData": {
+                "eventSource": "",
+                "timeStamp": "",
+                "validationResult": ""
+            }
+        }
+    ],
+    "required": [
+        "header",
+        "payload",
+        "publicPayload",
+        "dltData"
+    ],
+    "additionalProperties": true,
+    "properties": {
+        "header": {
+            "$id": "#/properties/header",
+            "type": "object",
+            "title": "The header schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "eventType": "Grants",
+                    "primaryKey": "TGS-0026008-ESS0118316H",
+                    "secondaryKey": "10026",
+                    "tertiaryKey": "GRN-2006-000462",
+                    "trainingPartnerUen": "T08GB0032G",
+                    "trainingPartnerCode": "T08GB0032G-01",
+                    "schemaLocation": "<TBC>",
+                    "schemaVersion": "TGS_v1.0"
+                }
+            ],
+            "required": [
+                "eventType",
+                "primaryKey",
+                "secondaryKey",
+                "tertiaryKey",
+                "trainingPartnerUen",
+                "trainingPartnerCode",
+                "schemaLocation",
+                "schemaVersion"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "eventType": {
+                    "$id": "#/properties/header/properties/eventType",
+                    "type": "string",
+                    "title": "The eventType schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "Grants"
+                    ]
+                },
+                "primaryKey": {
+                    "$id": "#/properties/header/properties/primaryKey",
+                    "type": "string",
+                    "title": "The primaryKey schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "TGS-0026008-ESS0118316H"
+                    ]
+                },
+                "secondaryKey": {
+                    "$id": "#/properties/header/properties/secondaryKey",
+                    "type": "string",
+                    "title": "The secondaryKey schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "10026"
+                    ]
+                },
+                "tertiaryKey": {
+                    "$id": "#/properties/header/properties/tertiaryKey",
+                    "type": "string",
+                    "title": "The tertiaryKey schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "GRN-2006-000462"
+                    ]
+                },
+                "trainingPartnerUen": {
+                    "$id": "#/properties/header/properties/trainingPartnerUen",
+                    "type": "string",
+                    "title": "The trainingPartnerUen schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "T08GB0032G"
+                    ]
+                },
+                "trainingPartnerCode": {
+                    "$id": "#/properties/header/properties/trainingPartnerCode",
+                    "type": "string",
+                    "title": "The trainingPartnerCode schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "T08GB0032G-01"
+                    ]
+                },
+                "schemaLocation": {
+                    "$id": "#/properties/header/properties/schemaLocation",
+                    "type": "string",
+                    "title": "The schemaLocation schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "<TBC>"
+                    ]
+                },
+                "schemaVersion": {
+                    "$id": "#/properties/header/properties/schemaVersion",
+                    "type": "string",
+                    "title": "The schemaVersion schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "TGS_v1.0"
+                    ]
+                }
+            }
+        },
+        "payload": {
+            "$id": "#/properties/payload",
+            "type": "object",
+            "title": "The payload schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "grants": {
+                        "enrolment": {
+                            "referenceNumber": "ENR-1912-000123"
+                        },
+                        "grantAmount": {
+                            "estimated": "SGD 100.5",
+                            "paid": "SGD 80.5"
+                        },
+                        "sponsoringAgency": {
+                            "uen": "116GB0003C",
+                            "name": " SkillsFuture Singapore"
+                        },
+                        "fundingScheme": {
+                            "code": "MCES",
+                            "description": "Mid-Career Enhanced Subsidy"
+                        },
+                        "fundingComponent": {
+                            "code": "CF",
+                            "description": "Course Fees"
+                        },
+                        "grantStatus": "Grant Processing",
+                        "referenceNumber": "GRN-2006-000462"
+                    }
+                }
+            ],
+            "required": [
+                "grants"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "grants": {
+                    "$id": "#/properties/payload/properties/grants",
+                    "type": "object",
+                    "title": "The grants schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "enrolment": {
+                                "referenceNumber": "ENR-1912-000123"
+                            },
+                            "grantAmount": {
+                                "estimated": "SGD 100.5",
+                                "paid": "SGD 80.5"
+                            },
+                            "sponsoringAgency": {
+                                "uen": "116GB0003C",
+                                "name": " SkillsFuture Singapore"
+                            },
+                            "fundingScheme": {
+                                "code": "MCES",
+                                "description": "Mid-Career Enhanced Subsidy"
+                            },
+                            "fundingComponent": {
+                                "code": "CF",
+                                "description": "Course Fees"
+                            },
+                            "grantStatus": "Grant Processing",
+                            "referenceNumber": "GRN-2006-000462"
+                        }
+                    ],
+                    "required": [
+                        "enrolment",
+                        "grantAmount",
+                        "sponsoringAgency",
+                        "fundingScheme",
+                        "fundingComponent",
+                        "grantStatus",
+                        "referenceNumber"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                        "enrolment": {
+                            "$id": "#/properties/payload/properties/grants/properties/enrolment",
+                            "type": "object",
+                            "title": "The enrolment schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "referenceNumber": "ENR-1912-000123"
+                                }
+                            ],
+                            "required": [
+                                "referenceNumber"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "referenceNumber": {
+                                    "$id": "#/properties/payload/properties/grants/properties/enrolment/properties/referenceNumber",
+                                    "type": "string",
+                                    "title": "The referenceNumber schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "ENR-1912-000123"
+                                    ]
+                                }
+                            }
+                        },
+                        "grantAmount": {
+                            "$id": "#/properties/payload/properties/grants/properties/grantAmount",
+                            "type": "object",
+                            "title": "The grantAmount schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "estimated": "SGD 100.5",
+                                    "paid": "SGD 80.5"
+                                }
+                            ],
+                            "required": [
+                                "estimated",
+                                "paid"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "estimated": {
+                                    "$id": "#/properties/payload/properties/grants/properties/grantAmount/properties/estimated",
+                                    "type": "string",
+                                    "title": "The estimated schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "SGD 100.5"
+                                    ]
+                                },
+                                "paid": {
+                                    "$id": "#/properties/payload/properties/grants/properties/grantAmount/properties/paid",
+                                    "type": "string",
+                                    "title": "The paid schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "SGD 80.5"
+                                    ]
+                                }
+                            }
+                        },
+                        "sponsoringAgency": {
+                            "$id": "#/properties/payload/properties/grants/properties/sponsoringAgency",
+                            "type": "object",
+                            "title": "The sponsoringAgency schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "uen": "116GB0003C",
+                                    "name": " SkillsFuture Singapore"
+                                }
+                            ],
+                            "required": [
+                                "uen",
+                                "name"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "uen": {
+                                    "$id": "#/properties/payload/properties/grants/properties/sponsoringAgency/properties/uen",
+                                    "type": "string",
+                                    "title": "The uen schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "116GB0003C"
+                                    ]
+                                },
+                                "name": {
+                                    "$id": "#/properties/payload/properties/grants/properties/sponsoringAgency/properties/name",
+                                    "type": "string",
+                                    "title": "The name schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        " SkillsFuture Singapore"
+                                    ]
+                                }
+                            }
+                        },
+                        "fundingScheme": {
+                            "$id": "#/properties/payload/properties/grants/properties/fundingScheme",
+                            "type": "object",
+                            "title": "The fundingScheme schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "code": "MCES",
+                                    "description": "Mid-Career Enhanced Subsidy"
+                                }
+                            ],
+                            "required": [
+                                "code",
+                                "description"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "code": {
+                                    "$id": "#/properties/payload/properties/grants/properties/fundingScheme/properties/code",
+                                    "type": "string",
+                                    "title": "The code schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "MCES"
+                                    ]
+                                },
+                                "description": {
+                                    "$id": "#/properties/payload/properties/grants/properties/fundingScheme/properties/description",
+                                    "type": "string",
+                                    "title": "The description schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "Mid-Career Enhanced Subsidy"
+                                    ]
+                                }
+                            }
+                        },
+                        "fundingComponent": {
+                            "$id": "#/properties/payload/properties/grants/properties/fundingComponent",
+                            "type": "object",
+                            "title": "The fundingComponent schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "code": "CF",
+                                    "description": "Course Fees"
+                                }
+                            ],
+                            "required": [
+                                "code",
+                                "description"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "code": {
+                                    "$id": "#/properties/payload/properties/grants/properties/fundingComponent/properties/code",
+                                    "type": "string",
+                                    "title": "The code schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "CF"
+                                    ]
+                                },
+                                "description": {
+                                    "$id": "#/properties/payload/properties/grants/properties/fundingComponent/properties/description",
+                                    "type": "string",
+                                    "title": "The description schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "Course Fees"
+                                    ]
+                                }
+                            }
+                        },
+                        "grantStatus": {
+                            "$id": "#/properties/payload/properties/grants/properties/grantStatus",
+                            "type": "string",
+                            "title": "The grantStatus schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "Grant Processing"
+                            ]
+                        },
+                        "referenceNumber": {
+                            "$id": "#/properties/payload/properties/grants/properties/referenceNumber",
+                            "type": "string",
+                            "title": "The referenceNumber schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "GRN-2006-000462"
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "publicPayload": {
+            "$id": "#/properties/publicPayload",
+            "type": "object",
+            "title": "The publicPayload schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "tags": [
+                        "TBC"
+                    ],
+                    "source": {
+                        "dateTime": "2020-05-04 20:58:17",
+                        "timeStampInMilliSeconds": "1588597097880"
+                    },
+                    "ack": {
+                        "dateTime": "-1",
+                        "timeStampInMilliSeconds": "-1"
+                    }
+                }
+            ],
+            "required": [
+                "tags",
+                "source",
+                "ack"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "tags": {
+                    "$id": "#/properties/publicPayload/properties/tags",
+                    "type": "array",
+                    "title": "The tags schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        [
+                            "TBC"
+                        ]
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$id": "#/properties/publicPayload/properties/tags/items/anyOf/0",
+                                "type": "string",
+                                "title": "The first anyOf schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": "",
+                                "examples": [
+                                    "TBC"
+                                ]
+                            }
+                        ],
+                        "$id": "#/properties/publicPayload/properties/tags/items"
+                    }
+                },
+                "source": {
+                    "$id": "#/properties/publicPayload/properties/source",
+                    "type": "object",
+                    "title": "The source schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "dateTime": "2020-05-04 20:58:17",
+                            "timeStampInMilliSeconds": "1588597097880"
+                        }
+                    ],
+                    "required": [
+                        "dateTime",
+                        "timeStampInMilliSeconds"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                        "dateTime": {
+                            "$id": "#/properties/publicPayload/properties/source/properties/dateTime",
+                            "type": "string",
+                            "title": "The dateTime schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "2020-05-04 20:58:17"
+                            ]
+                        },
+                        "timeStampInMilliSeconds": {
+                            "$id": "#/properties/publicPayload/properties/source/properties/timeStampInMilliSeconds",
+                            "type": "string",
+                            "title": "The timeStampInMilliSeconds schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "1588597097880"
+                            ]
+                        }
+                    }
+                },
+                "ack": {
+                    "$id": "#/properties/publicPayload/properties/ack",
+                    "type": "object",
+                    "title": "The ack schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "dateTime": "-1",
+                            "timeStampInMilliSeconds": "-1"
+                        }
+                    ],
+                    "required": [
+                        "dateTime",
+                        "timeStampInMilliSeconds"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                        "dateTime": {
+                            "$id": "#/properties/publicPayload/properties/ack/properties/dateTime",
+                            "type": "string",
+                            "title": "The dateTime schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "-1"
+                            ]
+                        },
+                        "timeStampInMilliSeconds": {
+                            "$id": "#/properties/publicPayload/properties/ack/properties/timeStampInMilliSeconds",
+                            "type": "string",
+                            "title": "The timeStampInMilliSeconds schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "-1"
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "dltData": {
+            "$id": "#/properties/dltData",
+            "type": "object",
+            "title": "The dltData schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "eventSource": "",
+                    "timeStamp": "",
+                    "validationResult": ""
+                }
+            ],
+            "required": [
+                "eventSource",
+                "timeStamp",
+                "validationResult"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "eventSource": {
+                    "$id": "#/properties/dltData/properties/eventSource",
+                    "type": "string",
+                    "title": "The eventSource schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        ""
+                    ]
+                },
+                "timeStamp": {
+                    "$id": "#/properties/dltData/properties/timeStamp",
+                    "type": "string",
+                    "title": "The timeStamp schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        ""
+                    ]
+                },
+                "validationResult": {
+                    "$id": "#/properties/dltData/properties/validationResult",
+                    "type": "string",
+                    "title": "The validationResult schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        ""
+                    ]
+                }
+            }
+        }
+    }
+}

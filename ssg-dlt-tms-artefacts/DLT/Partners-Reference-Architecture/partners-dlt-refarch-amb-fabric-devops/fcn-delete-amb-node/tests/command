@@ -1,0 +1,1 @@
+aws managedblockchain delete-node --network-id n-KCECJRDQNVCOFFCPS5CJ6HFUDA --member-id m-6BCEWEBGKRGT7GAMY6SGOCLAEI --node-id nd-HGCKQZQ5CVAJHBRS23SZW7GNQI

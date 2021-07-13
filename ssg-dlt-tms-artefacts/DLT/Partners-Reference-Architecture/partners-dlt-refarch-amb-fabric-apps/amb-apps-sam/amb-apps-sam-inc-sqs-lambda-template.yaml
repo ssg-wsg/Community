@@ -1,0 +1,185 @@
+# Copyright 2020 EY or its affiliates. All Rights Reserved.
+# 
+# Licensed under the Apache License, Version 2.0 (the "License").
+# You may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  amb-apps-lambdas
+
+  Sample SAM Template for amb-apps-lambdas
+Parameters:
+  DepsLayerARN:
+    Type: String
+    Description: >
+      Dependencies layer ARN
+  AMBAppsLambdaNamePrefix:
+    Type: String
+    Description: >
+      Prefix of the all lambda functions names.
+  AMBAppsVPCStackName:
+    Type: String
+    Description: >
+      ID of Cloud Formation template that was used to create a VPC for running applications.
+    Default: amb-apps-vpc
+  AMBRegionName:
+    Type: String
+    Description: A name of a region where the in-queue and lambda are to be provisioned.
+    Default: us-east-1
+  InvokeQueryFunctionARN:
+    Type: String
+    Description: A name of an Invoke/Query function that interacts with AMB.
+  AMBAppsSAMRoleARN:
+    Type: String
+    Description: >
+      ARN of an IAM role for SAM application.
+  AMBAppsInQueueName:
+    Type: String
+    Description: A name of an inbound SQS queue
+  AMBAppsSNSProcessingErrorTopicName:
+    Type: String
+    Description: A name of topic for processing errors notifications
+  AMBAppsSNSProcessingErrorNotificationEmail:
+    Type: String
+    Description: An email to send notifications for all processing error messages
+  AMBAppsInvalidRecordAlarmInvRec:
+    Type: String
+    Description: Name for cloudwatch alarm for invalid records
+  AMBAppsInvalidRecordAlarmRetry:
+    Type: String
+    Description: Name for cloudwatch alarm for retries
+  AMBAppsInvalidRecordNamespace:
+    Type: String
+    Description: Namespace for invalid records metrics
+  AMBAppsInvalidRecordMetric:
+    Type: String
+    Description: Name for invalid records metrics
+Globals:
+  Function:
+    Runtime: nodejs10.x
+    Timeout: 180
+    Handler: index.handler
+
+Resources:
+  invokePollSqs:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: !Sub "${AMBAppsLambdaNamePrefix}-invoke-poll-sqs"
+      CodeUri: fcn-poll-inc-sqs/
+      Handler: index.handler
+      Role: !Ref AMBAppsSAMRoleARN
+      Runtime: nodejs10.x
+      Timeout: 320
+      MemorySize: 320
+      Layers:
+        - !Ref DepsLayerARN
+      Environment:
+        Variables:
+          WORKER_LAMBDA_NAME: !Ref InvokeQueryFunctionARN
+          AWS_REGION_NAME: !Ref AMBRegionName
+          NAMESPACE: !Ref AMBAppsInvalidRecordNamespace
+          METRIC_NAME: !Ref AMBAppsInvalidRecordMetric
+          INC_DLQ_URL: !Ref AMBAppsInQueueDlq
+          #SNS_PROCESSING_ERROR_TOPIC_ARN: !Ref AMBAppsSNSProcessingErrorTopic
+      Tags:
+        AMBApps: LambdaInvokePollSqs
+
+  LambdaFunctionEventSourceMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      BatchSize: 1
+      Enabled: true
+      EventSourceArn: !GetAtt AMBAppsInQueue.Arn
+      FunctionName: !GetAtt invokePollSqs.Arn
+
+  #   LambdaFunctionEventInvokeConfig:
+  #       Type: AWS::Lambda::EventInvokeConfig
+  #       Properties:
+  #       DestinationConfig:
+  #         OnSuccess:
+  #           Destination: !Sub "${AWS::StackName}-InvokeQueryFunctionARN"
+  #       FunctionName: !GetAtt invokePollSqs.Arn
+
+  AMBAppsInQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Ref AMBAppsInQueueName
+      DelaySeconds: 0
+      VisibilityTimeout: 330
+
+  AMBAppsInQueueDlq:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub "${AMBAppsInQueueName}-dlq"
+      DelaySeconds: 0
+      VisibilityTimeout: 120
+
+  AMBAppsSNSProcessingErrorTopic:
+    Type: "AWS::SNS::Topic"
+    Properties:
+      TopicName: !Ref AMBAppsSNSProcessingErrorTopicName
+      Subscription:
+        - Protocol: email
+          Endpoint:
+            Ref: AMBAppsSNSProcessingErrorNotificationEmail
+
+  AlarmForInvalidRecords:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Ref AMBAppsInvalidRecordAlarmInvRec
+      AlarmDescription: "Alarm when invalid records are uploaded"
+      AlarmActions:
+        - Ref: AMBAppsSNSProcessingErrorTopic
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      Dimensions:
+        - Name: Lambda
+          Value: !Sub "${AMBAppsLambdaNamePrefix}-invoke-poll-sqs"
+        - Name: ErrorCase
+          Value: InvalidRecord
+      EvaluationPeriods: 1
+      MetricName: !Ref AMBAppsInvalidRecordMetric
+      Namespace: !Ref AMBAppsInvalidRecordNamespace
+      Period: 60
+      Statistic: Sum
+      Threshold: "1"
+      ActionsEnabled: true
+      TreatMissingData: notBreaching
+
+  AlarmForDltRetry:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Ref AMBAppsInvalidRecordAlarmRetry
+      AlarmDescription: "Alarm when records are retried"
+      AlarmActions:
+        - Ref: AMBAppsSNSProcessingErrorTopic
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      Dimensions:
+        - Name: Lambda
+          Value: !Sub "${AMBAppsLambdaNamePrefix}-invoke-poll-sqs"
+        - Name: ErrorCase
+          Value: RecordRetry
+      EvaluationPeriods: 1
+      MetricName: !Ref AMBAppsInvalidRecordMetric
+      Namespace: !Ref AMBAppsInvalidRecordNamespace
+      Period: 60
+      Statistic: Sum
+      Threshold: 60
+      ActionsEnabled: true
+      TreatMissingData: notBreaching
+Outputs:
+  AMBAppsInSQSQueueARN:
+    Description: ARN of incoming Events SQS Queue
+    Value: !GetAtt AMBAppsInQueue.Arn
+    Export:
+      Name:
+        Fn::Sub: ${AWS::StackName}-AMBAppsInSQSQueueARN

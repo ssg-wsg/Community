@@ -1,0 +1,19 @@
+{
+    "course": {
+      "referenceNumber": "COURSE-1911BRA-12345",
+      "runReferenceNumber": "41618",
+      "sessionId": "CRS-N-0041336-144-S1"
+    },
+    "trainee": {
+      "id": "S123455"
+    },
+    "attendance": {
+      "status": "Confirmed",
+      "formOfCollection": "Mobile",
+      "type": "Trainee",
+      "venue": {
+        "sessionPostalCode": "TBC",
+        "runPostalCode": "TBC"
+      }
+    }
+  }

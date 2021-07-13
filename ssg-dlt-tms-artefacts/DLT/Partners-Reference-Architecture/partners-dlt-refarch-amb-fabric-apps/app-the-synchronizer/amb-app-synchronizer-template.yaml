@@ -1,0 +1,292 @@
+# Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License").
+# You may not use this file except in compliance with the License.
+# A copy of the License is located at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# or in the "license" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
+# permissions and limitations under the License.
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: >
+  This template shows how to use AWS CodePipeline and AWS CodeBuild to build an
+  automated continuous deployment pipeline to Amazon Elastic Container Service
+  (Amazon ECS) using clusters powered by AWS Fargate.
+Parameters:
+  AMBAppsECSClusterName:
+    Type: String
+    Description: >
+      A name of an ECS cluster for Fargate containers.
+    Default: amb-apps-ecs
+  AMBAppsContainerNamePrefix:
+    Type: String
+    Description: >
+      A prefix for Fargate containers names.
+    Default: amb-apps-ecs
+  AMBAppsSecurityGroupID:
+    Type: String
+    Description: >
+      ID if the security group associated with the AMBAppsPrivateSubnetID to use for Lambda function interacting with
+      AMB-managed Hyperledger Fabric.
+  AMBAppsPrivateSubnet1ID:
+    Type: String
+    Description: >
+      ID if the private subnet with connectivity with AMB service. Lambda functions interacting with Hyperledger Fabric
+      managed by AMB will be instantiated in that network.
+  AMBAppsPrivateSubnet2ID:
+    Type: String
+    Description: >
+      ID if the private subnet with connectivity with AMB service. Lambda functions interacting with Hyperledger Fabric
+      managed by AMB will be instantiated in that network.
+  AMBAppsPrivateSubnet3ID:
+    Type: String
+    Description: >
+      ID if the private subnet with connectivity with AMB service. Lambda functions interacting with Hyperledger Fabric
+      managed by AMB will be instantiated in that network.
+  # AMBAppsCodePipelineName:
+  #   Type: String
+  #   Description: >
+  #     A name of CF stack for CodePipeline that is building and deploying The Synchronizer app.
+  #   Default: amb-apps-codepipeline
+  # ECRRepository:
+  #   Type: String
+  #   Description: >
+  #     An ARN of ECR repository. Please make sure you set ECR_REPOSITORY_ARN in your CodePipeline Build stage.
+  # AMBAppsECRRepositoryRegion:
+  #   Type: String
+  #   Description: >
+  #     A region for ECR repository. Should be the same with the pipeline in your CodePipeline.
+  AMBSyncIsMaster:
+    Type: String
+    Description: >
+      TBA
+    AllowedValues:
+      - true
+      - false
+    Default: false
+  AMBSyncLogLevel:
+    Type: String
+    Description: >
+      TBA
+    Default: debug
+  AMBSyncNetworkId:
+    Type: String
+    Description: >
+      TBA
+  AMBSyncMemberId:
+    Type: String
+    Description: >
+      TBA
+  AMBSyncUserName:
+    Type: String
+    Description: >
+      TBA
+  AMBSyncChannelName:
+    Type: String
+    Description: >
+      TBA
+  AMBSyncPeerId:
+    Type: String
+    Description: >
+      TBA
+  AMBSyncStartBlock:
+    Type: Number
+    Description: >
+      TBA
+    Default: 0
+  AMBSyncEndBlock:
+    Type: Number
+    Description: >
+      TBA
+    Default: -1
+  AMBSyncMaxHubRetries:
+    Type: Number
+    Description: >
+      TBA
+    Default: 10
+  AMBSyncDynamoTableName:
+    Type: String
+    Description: >
+      A name of a DynamoDB table that will hold the synchronized write set.
+    Default: amb-blockchainWriteSet
+  AMBSyncDynamoProfileName:
+    Type: String
+    Description: >
+      TBA
+    Default: default
+  AMBSyncDynamoRegion:
+    Type: String
+    Description: >
+      TBA
+    Default: us-east-1
+  AMBSyncDynamoPaginationIndex:
+    Type: String
+    Description: >
+      TBA
+    Default: docType-index
+  AMBAppsSyncTaskRoleARN:
+    Description: "Name of an IAM role for AMB Apps Synchronizer ECS Task"
+    Type: String
+  AMBAppsSyncTaskExecRoleARN:
+    Description: "Name of an IAM role for AMB Apps Synchronizer ECS Task Execution Role"
+    Type: String
+Conditions:
+  SecondPrivateSubnetExists:
+    Fn::Not:
+      - Fn::Equals:
+          - ""
+          - !Ref AMBAppsPrivateSubnet2ID
+  ThirdPrivateSubnetExists:
+    Fn::Not:
+      - Fn::Equals:
+          - ""
+          - !Ref AMBAppsPrivateSubnet3ID
+Resources:
+  ECRRepository:
+    Type: AWS::ECR::Repository
+    DeletionPolicy: Retain
+  Cluster:
+    Type: "AWS::ECS::Cluster"
+    Properties:
+      ClusterName: !Ref AMBAppsECSClusterName
+  WriteSetDynamoDbTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: _id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: _id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      # ProvisionedThroughput:
+      #   ReadCapacityUnits: "5"
+      #   WriteCapacityUnits: "5"
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      TableName: !Ref AMBSyncDynamoTableName
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /ecs/${Cluster}
+  FargateService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: !Ref Cluster
+      DesiredCount: 0
+      TaskDefinition: !Ref TaskDefinition
+      LaunchType: FARGATE
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          # AssignPublicIp: ENABLED
+          SecurityGroups:
+            - !Ref AMBAppsSecurityGroupID
+          Subnets:
+            - !Ref AMBAppsPrivateSubnet1ID
+            - Fn::If:
+                - SecondPrivateSubnetExists
+                - !Ref AMBAppsPrivateSubnet2ID
+                - !Ref "AWS::NoValue"
+            - Fn::If:
+                - ThirdPrivateSubnetExists
+                - !Ref AMBAppsPrivateSubnet3ID
+                - !Ref "AWS::NoValue"
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: !Sub "${AMBAppsContainerNamePrefix}-the-synchronizer"
+      RequiresCompatibilities: ["FARGATE"]
+      Memory: 512
+      Cpu: 256
+      NetworkMode: "awsvpc"
+      ExecutionRoleArn: !Ref AMBAppsSyncTaskExecRoleARN
+      TaskRoleArn: !Ref AMBAppsSyncTaskRoleARN
+      ContainerDefinitions:
+        - Name: !Sub "${AMBAppsContainerNamePrefix}-the-synchronizer"
+          Image:
+            Fn::Join:
+              - ""
+              - - !Ref AWS::AccountId
+                - ".dkr.ecr."
+                - !Ref AWS::Region
+                - ".amazonaws.com/"
+                #- Fn::ImportValue: !Sub "${AMBAppsCodePipelineName}-ECRRepository"
+                - !Ref ECRRepository
+                - ":"
+                - "latest"
+          Essential: true
+          Memory: 256
+          # PortMappings:
+          #   - ContainerPort: 80
+          Environment:
+            - Name: AMB_APPS_SYNC_IS_MASTER
+              Value: !Ref AMBSyncIsMaster
+            - Name: AMB_APPS_SYNC_LOG_LEVEL
+              Value: !Ref AMBSyncLogLevel
+            - Name: AMB_APPS_SYNC_BC_NETWORK_ID
+              Value: !Ref AMBSyncNetworkId
+            - Name: AMB_APPS_SYNC_BC_MEMBER_ID
+              Value: !Ref AMBSyncMemberId
+            - Name: AMB_APPS_SYNC_BC_USER_NAME
+              Value: !Ref AMBSyncUserName
+            - Name: AMB_APPS_SYNC_BC_CHANNEL_NAME
+              Value: !Ref AMBSyncChannelName
+            - Name: AMB_APPS_SYNC_BC_PEER_ID
+              Value: !Ref AMBSyncPeerId
+            - Name: AMB_APPS_SYNC_BC_START_BLOCK
+              Value: !Ref AMBSyncStartBlock
+            - Name: AMB_APPS_SYNC_BC_END_BLOCK
+              Value: !Ref AMBSyncEndBlock
+            - Name: AMB_APPS_SYNC_BC_MAX_EVENT_HUB_RETRIES
+              Value: !Ref AMBSyncMaxHubRetries
+
+            - Name: AMB_APPS_SYNC_DYNAMO_TABLE_NAME
+              Value: !Ref AMBSyncDynamoTableName
+            - Name: AMB_APPS_SYNC_DYNAMO_PROFILE_NAME
+              Value: !Ref AMBSyncDynamoProfileName
+            - Name: AMB_APPS_SYNC_DYNAMO_REGION
+              Value: !Ref AMBSyncDynamoRegion
+            - Name: AMB_APPS_SYNC_DYNAMO_PAGINATION_INDEX
+              Value: !Ref AMBSyncDynamoPaginationIndex
+            - Name: HFC_LOGGING
+              Value: '{"debug":"console","info":"console"}'
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-region: !Ref AWS::Region
+              awslogs-group: !Ref LogGroup
+              awslogs-stream-prefix: !Ref AWS::StackName
+          # HealthCheck:
+          #   Retries: 3
+          #   Command: ["CMD-SHELL", "curl -f http://localhost/   || exit 1"]
+          #   Timeout: 60
+          #   Interval: 300
+          #   StartPeriod: 300
+Outputs:
+  AMBAppsECRRepositoryURL:
+    Description: ECR repository URL
+    Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ECRRepository}
+    Export:
+      Name: !Sub "${AWS::StackName}-AMBAppsECRRepositoryURL"
+  AMBAppsECRRepositoryName:
+    Description: ECR repository Name
+    Value: !Ref ECRRepository
+    Export:
+      Name: !Sub "${AWS::StackName}-AMBAppsECRRepositoryName"
+  AMBAppsSynchronizerClusterName:
+    Value: !Ref Cluster
+  AMBAppsSynchronizerDynamoDBTable:
+    Value: !Ref WriteSetDynamoDbTable
+  AMBAppsSynchronizerDynamoDBTableStreamARN:
+    Description: ARN of DynamoTable Stream
+    Value:
+      Fn::GetAtt:
+        - WriteSetDynamoDbTable
+        - StreamArn
+    Export:
+      Name:
+        Fn::Sub: ${AWS::StackName}-SynchronizerDynamoDBStreamARN

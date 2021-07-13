@@ -1,0 +1,5 @@
+{
+    "networkId": "n-XXX",
+    "memberId": "m-XXX",
+    "connectionProfileUpdate": "{\"channelProfile\":{\"name\":\"testnet\",\"s3BucketName\":\"amb-devops-build-us-east-1-272769237722\",\"orderers\":[\"orderer1\"],\"peers\":{\"nd-XXX\":{\"endorsingPeer\":true,\"chaincodeQuery\":true,\"ledgerQuery\":true,\"eventSource\":true}}},\"endorsingPeerProfiles\":[{\"name\":\"nd-XXX\",\"url\":\"grpcs://nd-mhrcz5xvtvfvtlckjacfq6jf3m.m-7nkrwurtgjgardbloz4573ymcu.n-iiwomrvd7jadvapehk7mwkvmwy.managedblockchain.us-east-1.amazonaws.com:30003\",\"eventUrl\":\"grpcs://nd-mhrcz5xvtvfvtlckjacfq6jf3m.m-7nkrwurtgjgardbloz4573ymcu.n-iiwomrvd7jadvapehk7mwkvmwy.managedblockchain.us-east-1.amazonaws.com:30004\",\"grpcOptions\":{\"ssl-target-name-override\":\"nd-mhrcz5xvtvfvtlckjacfq6jf3m.m-7nkrwurtgjgardbloz4573ymcu.n-iiwomrvd7jadvapehk7mwkvmwy.managedblockchain.us-east-1.amazonaws.com\"},\"tlsCACerts\":{\"path\":\"/tmp/managedblockchain-tls-chain.pem\"}}],\"organizationProfile\":{\"name\":\"m-XXX\",\"mspid\":\"m-XXX\",\"peers\":[\"nd-XXX\"],\"certificateAuthorities\":[\"m-XXX\"]}}"
+}

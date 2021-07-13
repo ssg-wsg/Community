@@ -1,0 +1,6 @@
+{
+    "networkId": "n-XXX",
+    "memberId": "m-XXX",
+    "peerAlarmStatusesArray": ["AVAILABLE"],
+    "alarmSNSTopicARN": "arn:aws:sns:us-east-1:081347416431:amb-devops-cloudWatch-GoldRush-AlarmSNSTopic-18UE02NU0HNI7"
+}

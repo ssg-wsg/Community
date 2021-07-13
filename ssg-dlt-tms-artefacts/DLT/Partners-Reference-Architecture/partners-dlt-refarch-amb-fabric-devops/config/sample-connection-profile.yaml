@@ -1,0 +1,90 @@
+# Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License").
+# You may not use this file except in compliance with the License.
+# A copy of the License is located at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# or in the "license" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
+# permissions and limitations under the License.
+
+name: "ngo"
+x-type: "hlfv1"
+description: "NGO Network"
+version: "1.0"
+
+channels:
+  mychannel:
+    # Please specify the S3 bucket name for every channel. It will store:
+    # 1. amb-deployspec.yaml for every chaincode,
+    # 2. Current chaincode package to be installed on all endorsing peers in a channel
+    s3BucketName: "amb-shared-channel-info"
+    orderers:
+      - orderer1
+    peers:
+      nd-PXUO45PPW5FXDO2DM4HRC4OYRA:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+organizations:
+  Nik:
+    mspid: m-6BCEWEBGKRGT7GAMY6SGOCLAEI
+    peers:
+      - nd-PXUO45PPW5FXDO2DM4HRC4OYRA
+    certificateAuthorities:
+      - m-6BCEWEBGKRGT7GAMY6SGOCLAEI
+
+orderers:
+  orderer1:
+    url: grpcs://orderer.n-kcecjrdqnvcoffcps5cj6hfuda.managedblockchain.us-east-1.amazonaws.com:30001
+    grpcOptions:
+      ssl-target-name-override: orderer.n-kcecjrdqnvcoffcps5cj6hfuda.managedblockchain.us-east-1.amazonaws.com
+    tlsCACerts:
+      path: /tmp/managedblockchain-tls-chain.pem
+
+peers:
+  nd-PXUO45PPW5FXDO2DM4HRC4OYRA:
+    url: grpcs://nd-4nvrrqsdfrdszoxttbb6rfeqzq.m-6bcewebgkrgt7gamy6sgoclaei.n-kcecjrdqnvcoffcps5cj6hfuda.managedblockchain.us-east-1.amazonaws.com:30011
+    eventUrl: grpcs://nd-4nvrrqsdfrdszoxttbb6rfeqzq.m-6bcewebgkrgt7gamy6sgoclaei.n-kcecjrdqnvcoffcps5cj6hfuda.managedblockchain.us-east-1.amazonaws.com:30012
+    grpcOptions:
+      ssl-target-name-override: nd-4nvrrqsdfrdszoxttbb6rfeqzq.m-6bcewebgkrgt7gamy6sgoclaei.n-kcecjrdqnvcoffcps5cj6hfuda.managedblockchain.us-east-1.amazonaws.com
+    tlsCACerts:
+      path: /tmp/managedblockchain-tls-chain.pem
+
+certificateAuthorities:
+  m-6BCEWEBGKRGT7GAMY6SGOCLAEI:
+    url: https://ca.m-6bcewebgkrgt7gamy6sgoclaei.n-kcecjrdqnvcoffcps5cj6hfuda.managedblockchain.us-east-1.amazonaws.com:30002
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: /tmp/managedblockchain-tls-chain.pem
+
+client:
+  organization: Nik
+
+# Key parameters of Amazon Managed Blockchain Service
+amb:
+  networkId: "n-KCECJRDQNVCOFFCPS5CJ6HFUDA"
+  memberId: "m-6BCEWEBGKRGT7GAMY6SGOCLAEI"
+  networkName: "NicksWorld"
+  memberName: "Nik"
+  tlsCertBucket: "us-east-1.managedblockchain"
+  tlsCertObject: "etc/managedblockchain-tls-chain.pem"
+
+#YOU MAY SKIP THIS CONFIG IF YOU DON't HAVE ANY CHAINCODES INSTALLED
+# Here are the chaincodes instantiated on channels
+# The values below can be overwritten by amb-deployspec.yaml for every upgrade
+chaincodes:
+  fabcar:
+    #The endorsement policies used during instantiation on each of the channels
+    endorsementPolicy:
+      mychannel: ""
+    version: 1.0.0
+    peers:
+      - nd-PXUO45PPW5FXDO2DM4HRC4OYRA
+    newVersion: 1.0.1

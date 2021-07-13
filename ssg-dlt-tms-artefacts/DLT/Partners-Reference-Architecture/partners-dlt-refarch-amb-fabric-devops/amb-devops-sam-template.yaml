@@ -1,0 +1,381 @@
+# Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License").
+# You may not use this file except in compliance with the License.
+# A copy of the License is located at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# or in the "license" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
+# permissions and limitations under the License.
+
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  amb-devops-lambdas
+  SAM Template for amb-devops-lambdas
+Parameters:
+  # AMBDevOpsVPCStackName:
+  #   Type: String
+  #   Description: >
+  #     ID if Cloud Formation template that was used to create a VPC for running Lambda functions.
+  AMBDevOpsLambdaNamePrefix:
+    Type: String
+    Description: >
+      Prefix of the all lambda functions names.
+  AMBDevOpsSecurityGroupID:
+    Type: String
+    Description: >
+      ID if the security group associated with the AMBDevOpsPrivateSubnetID to use for Lambda function interacting with
+      AMB-managed Hyperledger Fabric.
+  AMBDevOpsPrivateSubnet1ID:
+    Type: String
+    Description: >
+      ID if the private subnet with connectivity with AMB service. Lambda functions interacting with Hyperledger Fabric
+      managed by AMB will be instantiated in that network.
+  AMBDevOpsPrivateSubnet2ID:
+    Type: String
+    Description: >
+      ID if the private subnet with connectivity with AMB service. Lambda functions interacting with Hyperledger Fabric
+      managed by AMB will be instantiated in that network.
+  AMBDevOpsPrivateSubnet3ID:
+    Type: String
+    Description: >
+      ID if the private subnet with connectivity with AMB service. Lambda functions interacting with Hyperledger Fabric
+      managed by AMB will be instantiated in that network.
+  AMBDevOpsSAMIamRoleARN:
+    Type: String
+    Description: "Implicit IAM Role ARN created for  AMB DevOps SAM application"
+  AMBDevOpsChannelJoinerIAMRoleName:
+    Type: String
+    Description: "An IAM Role name, to be used to allow access to the channel s3 bucket for new channel members "
+  AMBDevOpsCloudWatchAlertPeerAvailabilityNamePrefix:
+    Type: String
+    Description: "An name prefix of CloudWatch alert for peer availability function."
+    Default: "amb-devops"
+Conditions:
+  SecondPrivateSubnetExists:
+    Fn::Not:
+      - Fn::Equals:
+          - ""
+          - !Ref AMBDevOpsPrivateSubnet2ID
+  ThirdPrivateSubnetExists:
+    Fn::Not:
+      - Fn::Equals:
+          - ""
+          - !Ref AMBDevOpsPrivateSubnet3ID
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Runtime: nodejs10.x
+    Timeout: 180
+    Handler: index.handler
+    Environment:
+      Variables:
+        AMB_DEVOPS_CHANNEL_S3_IAM_OWNER_ROLE_ARN: !Ref AMBDevOpsSAMIamRoleARN
+        AMB_DEVOPS_CHANNEL_S3_IAM_JOINER_ROLE_NAME: !Ref AMBDevOpsChannelJoinerIAMRoleName
+        AMB_DEVOPS_CW_ALARM_NAME_PREFIX: !Ref AMBDevOpsCloudWatchAlertPeerAvailabilityNamePrefix
+        AMB_ACCOUNT_ID: !Ref "AWS::AccountId"
+        # AMB_APPS_DELETE_AMB_NODE_FCN_NAME: !Ref deleteambnode
+        # AMB_APPS_CREATE_AMB_NODE_FCN_NAME: !Ref createambnode
+        # AMB_APPS_JOIN_CHANNELS_FCN_NAME: !Ref joinchannels
+        # AMB_APPS_INSTALL_CHAINCODE_FCN_NAME: !Ref installchaincode
+        # AMB_APPS_REGISTER_ENROLL_FCN_NAME: !Ref registerenrolluser
+Resources:
+  devopsDependenciesLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: !Sub "${AMBDevOpsLambdaNamePrefix}-dependencies"
+      Description: Dependencies for sam app [node_modules, lib]
+      ContentUri: ./dependencies/
+      CompatibleRuntimes:
+        - nodejs10.x
+      LicenseInfo: "Apache2"
+      RetentionPolicy: Delete
+  #####
+  # Lambdas using Hyperledger Fabric Client:
+  #
+  installchaincode:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: !Sub "${AMBDevOpsLambdaNamePrefix}-install-chaincode"
+      Runtime: nodejs10.x
+      CodeUri: fcn-install-chaincode/
+      Description: "Lambda function that helps to install chaincode"
+      MemorySize: 192
+      Timeout: 10
+      Role: !Ref AMBDevOpsSAMIamRoleARN
+      Layers:
+        - !Ref devopsDependenciesLayer
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref AMBDevOpsSecurityGroupID
+        SubnetIds:
+          - !Ref AMBDevOpsPrivateSubnet1ID
+          - Fn::If:
+              - SecondPrivateSubnetExists
+              - !Ref AMBDevOpsPrivateSubnet2ID
+              - !Ref "AWS::NoValue"
+          - Fn::If:
+              - ThirdPrivateSubnetExists
+              - !Ref AMBDevOpsPrivateSubnet3ID
+              - !Ref "AWS::NoValue"
+      Tags:
+        AMBDevOps: LambdaInstallChaincode
+        UseHFC: true
+  joinchannels:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: !Sub "${AMBDevOpsLambdaNamePrefix}-join-channels"
+      Runtime: nodejs10.x
+      CodeUri: fcn-join-channels/
+      Description: "Lambda function to join peers to channels"
+      MemorySize: 192
+      Timeout: 10
+      Role: !Ref AMBDevOpsSAMIamRoleARN
+      Layers:
+        - !Ref devopsDependenciesLayer
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref AMBDevOpsSecurityGroupID
+        SubnetIds:
+          - !Ref AMBDevOpsPrivateSubnet1ID
+          - Fn::If:
+              - SecondPrivateSubnetExists
+              - !Ref AMBDevOpsPrivateSubnet2ID
+              - !Ref "AWS::NoValue"
+          - Fn::If:
+              - ThirdPrivateSubnetExists
+              - !Ref AMBDevOpsPrivateSubnet3ID
+              - !Ref "AWS::NoValue"
+      Tags:
+        AMBDevOps: LambdaJoinChannels
+        UseHFC: true
+  peerinfo:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: !Sub "${AMBDevOpsLambdaNamePrefix}-peer-info"
+      Runtime: nodejs10.x
+      CodeUri: fcn-get-peer-info/
+      Description: "Lambda function to get peer information"
+      MemorySize: 192
+      Timeout: 15
+      Role: !Ref AMBDevOpsSAMIamRoleARN
+      Layers:
+        - !Ref devopsDependenciesLayer
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref AMBDevOpsSecurityGroupID
+        SubnetIds:
+          - !Ref AMBDevOpsPrivateSubnet1ID
+          - Fn::If:
+              - SecondPrivateSubnetExists
+              - !Ref AMBDevOpsPrivateSubnet2ID
+              - !Ref "AWS::NoValue"
+          - Fn::If:
+              - ThirdPrivateSubnetExists
+              - !Ref AMBDevOpsPrivateSubnet3ID
+              - !Ref "AWS::NoValue"
+      Tags:
+        AMBDevOps: LambdaGetPeerInfo
+        UseHFC: true
+  getchannelconfig:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: !Sub "${AMBDevOpsLambdaNamePrefix}-get-channel-config"
+      Runtime: nodejs10.x
+      CodeUri: fcn-get-channel-config/
+      Description: "Lambda function to retrieve channel config"
+      MemorySize: 256
+      Timeout: 300
+      Role: !Ref AMBDevOpsSAMIamRoleARN
+      Layers:
+        - !Ref devopsDependenciesLayer
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref AMBDevOpsSecurityGroupID
+        SubnetIds:
+          - !Ref AMBDevOpsPrivateSubnet1ID
+          - Fn::If:
+              - SecondPrivateSubnetExists
+              - !Ref AMBDevOpsPrivateSubnet2ID
+              - !Ref "AWS::NoValue"
+          - Fn::If:
+              - ThirdPrivateSubnetExists
+              - !Ref AMBDevOpsPrivateSubnet3ID
+              - !Ref "AWS::NoValue"
+      Tags:
+        AMBDevOps: LambdaGetChannelConfig
+        UseHFC: true
+  registerenrolluser:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: !Sub "${AMBDevOpsLambdaNamePrefix}-register-enroll-user"
+      Runtime: nodejs10.x
+      CodeUri: fcn-register-enroll-user/
+      Description: >
+        Lambda function to register and enroll new user
+      MemorySize: 192
+      Timeout: 10
+      Role: !Ref AMBDevOpsSAMIamRoleARN
+      Layers:
+        - !Ref devopsDependenciesLayer
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref AMBDevOpsSecurityGroupID
+        SubnetIds:
+          - !Ref AMBDevOpsPrivateSubnet1ID
+          - Fn::If:
+              - SecondPrivateSubnetExists
+              - !Ref AMBDevOpsPrivateSubnet2ID
+              - !Ref "AWS::NoValue"
+          - Fn::If:
+              - ThirdPrivateSubnetExists
+              - !Ref AMBDevOpsPrivateSubnet3ID
+              - !Ref "AWS::NoValue"
+      Tags:
+        AMBDevOps: LambdaRegisterEnrollUser
+        UseHFC: true
+  sharecerts:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: !Sub "${AMBDevOpsLambdaNamePrefix}-share-certs"
+      Runtime: nodejs10.x
+      CodeUri: fcn-share-certs/
+      Description: "Lambda function sharing certs with network operater"
+      MemorySize: 192
+      Timeout: 10
+      Role: !Ref AMBDevOpsSAMIamRoleARN
+      Layers:
+        - !Ref devopsDependenciesLayer
+      Tags:
+        AMBDevOps: LambdaShareCerts
+        UseHFC: true
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref AMBDevOpsSecurityGroupID
+        SubnetIds:
+          - !Ref AMBDevOpsPrivateSubnet1ID
+          - Fn::If:
+              - SecondPrivateSubnetExists
+              - !Ref AMBDevOpsPrivateSubnet2ID
+              - !Ref "AWS::NoValue"
+          - Fn::If:
+              - ThirdPrivateSubnetExists
+              - !Ref AMBDevOpsPrivateSubnet3ID
+              - !Ref "AWS::NoValue"
+  #####
+  # Lambdas NOT using Hyperledger Fabric Client:
+  #
+  deleteambnode:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: !Sub "${AMBDevOpsLambdaNamePrefix}-delete-amb-node"
+      Runtime: nodejs10.x
+      CodeUri: fcn-delete-amb-node/
+      Description: "Lambda function deleting a Fabric peer from the AMB network"
+      MemorySize: 256
+      Timeout: 360
+      Role: !Ref AMBDevOpsSAMIamRoleARN
+      Layers:
+        - !Ref devopsDependenciesLayer
+      Tags:
+        AMBDevOps: LambdaDeleteAMBNode
+        UseHFC: false
+  peerrecovery:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: !Sub "${AMBDevOpsLambdaNamePrefix}-peer-recovery"
+      Runtime: nodejs10.x
+      CodeUri: fcn-peer-recovery/
+      Description: "Lambda function to coordinate peer recovery process"
+      MemorySize: 256
+      Timeout: 900
+      Role: !Ref AMBDevOpsSAMIamRoleARN
+      Layers:
+        - !Ref devopsDependenciesLayer
+      Tags:
+        AMBDevOps: LambdaPeerRecovery
+        UseHFC: false
+      Environment:
+        Variables:
+          AMB_APPS_DELETE_AMB_NODE_FCN_NAME: !Ref deleteambnode
+          AMB_APPS_CREATE_AMB_NODE_FCN_NAME: !Ref createambnode
+          AMB_APPS_JOIN_CHANNELS_FCN_NAME: !Ref joinchannels
+          AMB_APPS_INSTALL_CHAINCODE_FCN_NAME: !Ref installchaincode
+  createambnode:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: !Sub "${AMBDevOpsLambdaNamePrefix}-create-amb-node"
+      Runtime: nodejs10.x
+      CodeUri: fcn-create-amb-node/
+      Description: "Lambda function creating a Fabric peer in the AMB network"
+      MemorySize: 256
+      Timeout: 360
+      Role: !Ref AMBDevOpsSAMIamRoleARN
+      Layers:
+        - !Ref devopsDependenciesLayer
+      Tags:
+        AMBDevOps: LambdaCreateAMBNode
+        UseHFC: false
+  peerstatuscheck:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: !Sub "${AMBDevOpsLambdaNamePrefix}-peer-status-check"
+      Runtime: nodejs10.x
+      CodeUri: fcn-peer-status-check/
+      Description: "A Lambda function that checks status of the peer"
+      MemorySize: 192
+      Timeout: 10
+      Role: !Ref AMBDevOpsSAMIamRoleARN
+      Layers:
+        - !Ref devopsDependenciesLayer
+      Tags:
+        AMBDevOps: LambdaCreateAMBNode
+        UseHFC: false
+  setup:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: !Sub "${AMBDevOpsLambdaNamePrefix}-setup"
+      Runtime: nodejs10.x
+      CodeUri: fcn-setup/
+      Description: "Lambda function to generate new connection profile with org, peer, orderer and CA info"
+      MemorySize: 192
+      Timeout: 20
+      Role: !Ref AMBDevOpsSAMIamRoleARN
+      Layers:
+        - !Ref devopsDependenciesLayer
+      Tags:
+        AMBDevOps: LambdaSetupFunction
+        UseHFC: false
+      Environment:
+        Variables:
+          AMB_APPS_REGISTER_ENROLL_FCN_NAME: !Ref registerenrolluser
+Outputs:
+  # PackageChaincodeIamRole:
+  #   Description: "Implicit IAM Role created for  AMB DevOps SAM application"
+  #   Value: !Ref AMBDevOpsSAMIamRoleARN
+  PeerstatuscheckARN:
+    Description: "Arn of peer status check function"
+    Value: !GetAtt peerstatuscheck.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-PeerstatuscheckARN"
+  PeerrecoveryARN:
+    Description: "Arn of peer status check function"
+    Value: !GetAtt peerrecovery.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-PeerrecoveryARN"
+  InstallchaincodeName:
+    Description: "Name of installchaincode function"
+    Value: !Ref installchaincode
+  DeleteambnodeName:
+    Description: "Name of deleteambnode function"
+    Value: !Ref deleteambnode
+  CreateambnodeName:
+    Description: "Name of createambnode function"
+    Value: !Ref createambnode
+  JoinchannelsName:
+    Description: "Name of joinchannels function"
+    Value: !Ref joinchannels

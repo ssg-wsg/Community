@@ -1,0 +1,25 @@
+ {
+	"header": {
+		"eventType": "Enrolment",
+		"primaryKey": "45223569c163d43b79a9f97c517a7e9e3d4def7d337761014d1a207107931208e30b81dded935bb10c676d19cc20f59e",
+		"secondaryKey": "41618B",
+		"tertiaryKey": "-1",
+		"trainingPartnerUEN": "ORG00008UEN",
+        "trainingPartnerCode":"ORG00008UEN-01",
+		"schemaLocation": "src/test/resources/schema-validation/enrolment/v0.3.json",
+		"schemaVersion": "TGS_v3.0"
+	},
+	"payload": {
+		"dataKey": "7c8828496ffabf8b6952544f761b9f417de170aa44fc19abfc78a3ee7f74af11eb33f8955f12af10e0e69476a2fd45a6",
+		"record": "MpQXS54MF+DSSUwKcJTpKVjYukbiw0mbQYRtR4N1w71XnlFKEaXsf/QHxUeXUMxa0QB/z9RglhjaEOT/S3CugCV2fg9e5QNNXGg+GglCV05v0peHnsFw7XiwVjN8x+z5SK7+VwSCkAo/ixP/hiqOSIwINnM5/G3PqIQZX8oILUqyJJyBKu1es1XyD3tXakPl/WHX+UXBgJlZZG6kc3T66w4MJl/2HwNy1Vch46Ohvhk+xsY+sHuKWi9hgm7zMf+ZVkX8BghlQAj4hDwsDyEESpNDRAFce4u67cs2eyFy9mnv4fV8haNPgfMMMNWwcnBsNuSVxGLVj5lHIW73xbayosmh5MV22hCJ8OJy/D1yHJLqySB22Yfr00JLcBiUj0Y6AR35h1p7kYAN5Trs6W2pFiE1rVeFtb9uI/nWTRHDpS7gB3fClp1xmGmrYIGu3UwjFoOu8yec58vx968AUCRKupurafLemumEpq3aVrMIVcnuLiWRNZ5JZA04l/S6SdlNpOYpJVp8O9xLHK0/j7Lj7Hkr4rZs9PWSP1YQgmqMQdxuXwdF55edePcP4fQScexLlpOTu25i5/s5Cw9Nn03uiuQeeRhK91h0uTtP/dgYG5QNKd32/d8nZCo+ft7JmGXqG7aQPZ2omRv0qc70iihcjGr+JYyyN1S+8YqCn9qG6gARyHrx2BXTRaZoKRwqNAHt+LTBOKO7HVp/nvPshGSMg+KM5FAqlomv2YIKfdoJpb45Pp7wEttgiB8GjdmMETvZdu7vre9UJQFGoF00zZY43f56BokDPb8YS+W2LGaqxlDEQi/1JgEUVbCvo2ri+FOKDda6EV2rQRvdO6fJbPcWJrVmM7KoWy0xIHqPwQGWfhugqNXUO2z9P0oiTGdYu5yb"
+	},
+	"publicPayload": {
+		"tags": ["tag-sample-1"]
+	},
+	"dltData": {
+		"eventSource": "<TBC>",
+		"timeStamp": "<TBC>",
+		"validationResult": "<TBC>",
+		"transactionID": "<TBC>"
+	}
+}

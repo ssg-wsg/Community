@@ -1,0 +1,17 @@
+{
+    "Node": {
+        "NetworkId": "n-KCECJRDQNVCOFFCPS5CJ6HFUDA",
+        "MemberId": "m-6BCEWEBGKRGT7GAMY6SGOCLAEI",
+        "Id": "nd-HGCKQZQ5CVAJHBRS23SZW7GNQI",
+        "InstanceType": "bc.t3.small",
+        "AvailabilityZone": "us-east-1a",
+        "FrameworkAttributes": {
+            "Fabric": {
+                "PeerEndpoint": "nd-hgckqzq5cvajhbrs23szw7gnqi.m-6bcewebgkrgt7gamy6sgoclaei.n-kcecjrdqnvcoffcps5cj6hfuda.managedblockchain.us-east-1.amazonaws.com:30003",
+                "PeerEventEndpoint": "nd-hgckqzq5cvajhbrs23szw7gnqi.m-6bcewebgkrgt7gamy6sgoclaei.n-kcecjrdqnvcoffcps5cj6hfuda.managedblockchain.us-east-1.amazonaws.com:30004"
+            }
+        },
+        "Status": "AVAILABLE",
+        "CreationDate": "2019-10-11T06:57:47.090Z"
+    }
+}

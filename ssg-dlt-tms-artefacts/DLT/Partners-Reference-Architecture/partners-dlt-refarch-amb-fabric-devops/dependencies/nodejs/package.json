@@ -1,0 +1,23 @@
+{
+  "name": "shared-libs",
+  "version": "1.0.0",
+  "description": "A layer with dependencies used by other lambdas",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm rebuild grpc --target=10.0.0 --target_platform=linux --target_arch=x64 --target_libc=glibc --update-binary"
+  },
+  "engines": {
+    "node": ">=10.0 <11.0",
+    "npm": ">=5.5.1 <7.0"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "aws-sdk": "^2.494.0",
+    "fs-extra": "^8.1.0",
+    "log4js": "^3.0.6",
+    "semver": "^6.3.0",
+    "unzipper": "^0.10.5",
+    "yaml": "^1.7.2"
+  },
+  "author": "Nikolay Vlasov"
+}

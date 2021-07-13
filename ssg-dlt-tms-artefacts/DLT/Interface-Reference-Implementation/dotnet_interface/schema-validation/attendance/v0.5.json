@@ -1,0 +1,799 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "header": {
+                "eventType": "Attendance",
+                "primaryKey": "COURSE-1911BRA-12345T786756",
+                "secondaryKey": "416181",
+                "tertiaryKey": "CRS-N-0041336-144-S1",
+                "trainingPartnerUen": "99978444P",
+                "trainingPartnerCode": "99978444P-01",
+                "schemaLocation": "../../../../../schema-validation/attendance/v0.4.json",
+                "schemaVersion": "TGS_v0.4"
+            },
+            "payload": {
+                "course": {
+                    "referenceNumber": "COURSE-1911BRA-12345",
+                    "run": {
+                        "id": "416181",
+                        "modeOfTraining": {
+                            "code": "1",
+                            "description": "Classroom"
+                        }
+                    },
+                    "session": {
+                        "id": "CRS-N-0041336-144-S1",
+                        "attendanceId": "123",
+                        "modeOfTraining": {
+                            "code": "1",
+                            "description": "Classroom"
+                        },
+                        "startDateTime": "2020-04-01 08:00",
+                        "endDateTime": "2020-04-01 11:00"
+                    }
+                },
+                "trainee": {
+                    "id": "T786756",
+                    "idTypeCode": "SB"
+                },
+                "attendance": {
+                    "status": "Confirmed",
+                    "formOfCollection": "Mobile",
+                    "type": "Trainee",
+                    "venue": {
+                        "sessionPostalCode": "870626"
+                    },
+                    "numOfHours": "-1"
+                },
+                "isDeleted": "N"
+            },
+            "publicPayload": {
+                "tags": [],
+                "source": {
+                    "dateTime": "2020-05-13 21:27:20",
+                    "timeStampInMilliSeconds": "1589376440269"
+                },
+                "ack": {
+                    "dateTime": "-1",
+                    "timeStampInMilliSeconds": "-1"
+                }
+            },
+            "dltData": {
+                "eventSource": "",
+                "timeStamp": "",
+                "validationResult": ""
+            }
+        }
+    ],
+    "required": [
+        "header",
+        "payload",
+        "publicPayload",
+        "dltData"
+    ],
+    "additionalProperties": true,
+    "properties": {
+        "header": {
+            "$id": "#/properties/header",
+            "type": "object",
+            "title": "The header schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "eventType": "Attendance",
+                    "primaryKey": "COURSE-1911BRA-12345T786756",
+                    "secondaryKey": "416181",
+                    "tertiaryKey": "CRS-N-0041336-144-S1",
+                    "trainingPartnerUen": "99978444P",
+                    "trainingPartnerCode": "99978444P-01",
+                    "schemaLocation": "../../../../../schema-validation/attendance/v0.4.json",
+                    "schemaVersion": "TGS_v0.4"
+                }
+            ],
+            "required": [
+                "eventType",
+                "primaryKey",
+                "secondaryKey",
+                "tertiaryKey",
+                "trainingPartnerUen",
+                "trainingPartnerCode",
+                "schemaLocation",
+                "schemaVersion"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "eventType": {
+                    "$id": "#/properties/header/properties/eventType",
+                    "type": "string",
+                    "title": "The eventType schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "Attendance"
+                    ]
+                },
+                "primaryKey": {
+                    "$id": "#/properties/header/properties/primaryKey",
+                    "type": "string",
+                    "title": "The primaryKey schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "COURSE-1911BRA-12345T786756"
+                    ]
+                },
+                "secondaryKey": {
+                    "$id": "#/properties/header/properties/secondaryKey",
+                    "type": "string",
+                    "title": "The secondaryKey schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "416181"
+                    ]
+                },
+                "tertiaryKey": {
+                    "$id": "#/properties/header/properties/tertiaryKey",
+                    "type": "string",
+                    "title": "The tertiaryKey schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "CRS-N-0041336-144-S1"
+                    ]
+                },
+                "trainingPartnerUen": {
+                    "$id": "#/properties/header/properties/trainingPartnerUen",
+                    "type": "string",
+                    "title": "The trainingPartnerUen schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "99978444P"
+                    ]
+                },
+                "trainingPartnerCode": {
+                    "$id": "#/properties/header/properties/trainingPartnerCode",
+                    "type": "string",
+                    "title": "The trainingPartnerCode schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "99978444P-01"
+                    ]
+                },
+                "schemaLocation": {
+                    "$id": "#/properties/header/properties/schemaLocation",
+                    "type": "string",
+                    "title": "The schemaLocation schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "../../../../../schema-validation/attendance/v0.4.json"
+                    ]
+                },
+                "schemaVersion": {
+                    "$id": "#/properties/header/properties/schemaVersion",
+                    "type": "string",
+                    "title": "The schemaVersion schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "TGS_v0.4"
+                    ]
+                }
+            }
+        },
+        "payload": {
+            "$id": "#/properties/payload",
+            "type": "object",
+            "title": "The payload schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "course": {
+                        "referenceNumber": "COURSE-1911BRA-12345",
+                        "run": {
+                            "id": "416181",
+                            "modeOfTraining": {
+                                "code": "1",
+                                "description": "Classroom"
+                            }
+                        },
+                        "session": {
+                            "id": "CRS-N-0041336-144-S1",
+                            "attendanceId": "123",
+                            "modeOfTraining": {
+                                "code": "1",
+                                "description": "Classroom"
+                            },
+                            "startDateTime": "2020-04-01 08:00",
+                            "endDateTime": "2020-04-01 11:00"
+                        }
+                    },
+                    "trainee": {
+                        "id": "T786756",
+                        "idTypeCode": "SB"
+                    },
+                    "attendance": {
+                        "status": "Confirmed",
+                        "formOfCollection": "Mobile",
+                        "type": "Trainee",
+                        "venue": {
+                            "sessionPostalCode": "870626"
+                        },
+                        "numOfHours": "-1"
+                    },
+                    "isDeleted": "N"
+                }
+            ],
+            "required": [
+                "course",
+                "trainee",
+                "attendance",
+                "isDeleted"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "course": {
+                    "$id": "#/properties/payload/properties/course",
+                    "type": "object",
+                    "title": "The course schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "referenceNumber": "COURSE-1911BRA-12345",
+                            "run": {
+                                "id": "416181",
+                                "modeOfTraining": {
+                                    "code": "1",
+                                    "description": "Classroom"
+                                }
+                            },
+                            "session": {
+                                "id": "CRS-N-0041336-144-S1",
+                                "attendanceId": "123",
+                                "modeOfTraining": {
+                                    "code": "1",
+                                    "description": "Classroom"
+                                },
+                                "startDateTime": "2020-04-01 08:00",
+                                "endDateTime": "2020-04-01 11:00"
+                            }
+                        }
+                    ],
+                    "required": [
+                        "referenceNumber",
+                        "run",
+                        "session"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                        "referenceNumber": {
+                            "$id": "#/properties/payload/properties/course/properties/referenceNumber",
+                            "type": "string",
+                            "title": "The referenceNumber schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "COURSE-1911BRA-12345"
+                            ]
+                        },
+                        "run": {
+                            "$id": "#/properties/payload/properties/course/properties/run",
+                            "type": "object",
+                            "title": "The run schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "id": "416181",
+                                    "modeOfTraining": {
+                                        "code": "1",
+                                        "description": "Classroom"
+                                    }
+                                }
+                            ],
+                            "required": [
+                                "id",
+                                "modeOfTraining"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "id": {
+                                    "$id": "#/properties/payload/properties/course/properties/run/properties/id",
+                                    "type": "string",
+                                    "title": "The id schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "416181"
+                                    ]
+                                },
+                                "modeOfTraining": {
+                                    "$id": "#/properties/payload/properties/course/properties/run/properties/modeOfTraining",
+                                    "type": "object",
+                                    "title": "The modeOfTraining schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": {},
+                                    "examples": [
+                                        {
+                                            "code": "1",
+                                            "description": "Classroom"
+                                        }
+                                    ],
+                                    "required": [
+                                        "code",
+                                        "description"
+                                    ],
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "code": {
+                                            "$id": "#/properties/payload/properties/course/properties/run/properties/modeOfTraining/properties/code",
+                                            "type": "string",
+                                            "title": "The code schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": "",
+                                            "examples": [
+                                                "1"
+                                            ]
+                                        },
+                                        "description": {
+                                            "$id": "#/properties/payload/properties/course/properties/run/properties/modeOfTraining/properties/description",
+                                            "type": "string",
+                                            "title": "The description schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": "",
+                                            "examples": [
+                                                "Classroom"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "session": {
+                            "$id": "#/properties/payload/properties/course/properties/session",
+                            "type": "object",
+                            "title": "The session schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "id": "CRS-N-0041336-144-S1",
+                                    "attendanceId": "123",
+                                    "modeOfTraining": {
+                                        "code": "1",
+                                        "description": "Classroom"
+                                    },
+                                    "startDateTime": "2020-04-01 08:00",
+                                    "endDateTime": "2020-04-01 11:00"
+                                }
+                            ],
+                            "required": [
+                                "id",
+                                "attendanceId",
+                                "modeOfTraining",
+                                "startDateTime",
+                                "endDateTime"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "id": {
+                                    "$id": "#/properties/payload/properties/course/properties/session/properties/id",
+                                    "type": "string",
+                                    "title": "The id schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "CRS-N-0041336-144-S1"
+                                    ]
+                                },
+                                "attendanceId": {
+                                    "$id": "#/properties/payload/properties/course/properties/session/properties/attendanceId",
+                                    "type": "string",
+                                    "title": "The attendanceId schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "123"
+                                    ]
+                                },
+                                "modeOfTraining": {
+                                    "$id": "#/properties/payload/properties/course/properties/session/properties/modeOfTraining",
+                                    "type": "object",
+                                    "title": "The modeOfTraining schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": {},
+                                    "examples": [
+                                        {
+                                            "code": "1",
+                                            "description": "Classroom"
+                                        }
+                                    ],
+                                    "required": [
+                                        "code",
+                                        "description"
+                                    ],
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "code": {
+                                            "$id": "#/properties/payload/properties/course/properties/session/properties/modeOfTraining/properties/code",
+                                            "type": "string",
+                                            "title": "The code schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": "",
+                                            "examples": [
+                                                "1"
+                                            ]
+                                        },
+                                        "description": {
+                                            "$id": "#/properties/payload/properties/course/properties/session/properties/modeOfTraining/properties/description",
+                                            "type": "string",
+                                            "title": "The description schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": "",
+                                            "examples": [
+                                                "Classroom"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "startDateTime": {
+                                    "$id": "#/properties/payload/properties/course/properties/session/properties/startDateTime",
+                                    "type": "string",
+                                    "title": "The startDateTime schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "2020-04-01 08:00"
+                                    ]
+                                },
+                                "endDateTime": {
+                                    "$id": "#/properties/payload/properties/course/properties/session/properties/endDateTime",
+                                    "type": "string",
+                                    "title": "The endDateTime schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "2020-04-01 11:00"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "trainee": {
+                    "$id": "#/properties/payload/properties/trainee",
+                    "type": "object",
+                    "title": "The trainee schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "id": "T786756",
+                            "idTypeCode": "SB"
+                        }
+                    ],
+                    "required": [
+                        "id",
+                        "idTypeCode"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                        "id": {
+                            "$id": "#/properties/payload/properties/trainee/properties/id",
+                            "type": "string",
+                            "title": "The id schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "T786756"
+                            ]
+                        },
+                        "idTypeCode": {
+                            "$id": "#/properties/payload/properties/trainee/properties/idTypeCode",
+                            "type": "string",
+                            "title": "The idTypeCode schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "SB"
+                            ]
+                        }
+                    }
+                },
+                "attendance": {
+                    "$id": "#/properties/payload/properties/attendance",
+                    "type": "object",
+                    "title": "The attendance schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "status": "Confirmed",
+                            "formOfCollection": "Mobile",
+                            "type": "Trainee",
+                            "venue": {
+                                "sessionPostalCode": "870626"
+                            },
+                            "numOfHours": "-1"
+                        }
+                    ],
+                    "required": [
+                        "status",
+                        "formOfCollection",
+                        "type",
+                        "venue",
+                        "numOfHours"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                        "status": {
+                            "$id": "#/properties/payload/properties/attendance/properties/status",
+                            "type": "string",
+                            "title": "The status schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "Confirmed"
+                            ]
+                        },
+                        "formOfCollection": {
+                            "$id": "#/properties/payload/properties/attendance/properties/formOfCollection",
+                            "type": "string",
+                            "title": "The formOfCollection schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "Mobile"
+                            ]
+                        },
+                        "type": {
+                            "$id": "#/properties/payload/properties/attendance/properties/type",
+                            "type": "string",
+                            "title": "The type schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "Trainee"
+                            ]
+                        },
+                        "venue": {
+                            "$id": "#/properties/payload/properties/attendance/properties/venue",
+                            "type": "object",
+                            "title": "The venue schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "sessionPostalCode": "870626"
+                                }
+                            ],
+                            "required": [
+                                "sessionPostalCode"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "sessionPostalCode": {
+                                    "$id": "#/properties/payload/properties/attendance/properties/venue/properties/sessionPostalCode",
+                                    "type": "string",
+                                    "title": "The sessionPostalCode schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "870626"
+                                    ]
+                                }
+                            }
+                        },
+                        "numOfHours": {
+                            "$id": "#/properties/payload/properties/attendance/properties/numOfHours",
+                            "type": "string",
+                            "title": "The numOfHours schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "-1"
+                            ]
+                        }
+                    }
+                },
+                "isDeleted": {
+                    "$id": "#/properties/payload/properties/isDeleted",
+                    "type": "string",
+                    "title": "The isDeleted schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "N"
+                    ]
+                }
+            }
+        },
+        "publicPayload": {
+            "$id": "#/properties/publicPayload",
+            "type": "object",
+            "title": "The publicPayload schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "tags": [],
+                    "source": {
+                        "dateTime": "2020-05-13 21:27:20",
+                        "timeStampInMilliSeconds": "1589376440269"
+                    },
+                    "ack": {
+                        "dateTime": "-1",
+                        "timeStampInMilliSeconds": "-1"
+                    }
+                }
+            ],
+            "required": [
+                "tags",
+                "source",
+                "ack"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "tags": {
+                    "$id": "#/properties/publicPayload/properties/tags",
+                    "type": "array",
+                    "title": "The tags schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        []
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "anyOf": [],
+                        "$id": "#/properties/publicPayload/properties/tags/items"
+                    }
+                },
+                "source": {
+                    "$id": "#/properties/publicPayload/properties/source",
+                    "type": "object",
+                    "title": "The source schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "dateTime": "2020-05-13 21:27:20",
+                            "timeStampInMilliSeconds": "1589376440269"
+                        }
+                    ],
+                    "required": [
+                        "dateTime",
+                        "timeStampInMilliSeconds"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                        "dateTime": {
+                            "$id": "#/properties/publicPayload/properties/source/properties/dateTime",
+                            "type": "string",
+                            "title": "The dateTime schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "2020-05-13 21:27:20"
+                            ]
+                        },
+                        "timeStampInMilliSeconds": {
+                            "$id": "#/properties/publicPayload/properties/source/properties/timeStampInMilliSeconds",
+                            "type": "string",
+                            "title": "The timeStampInMilliSeconds schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "1589376440269"
+                            ]
+                        }
+                    }
+                },
+                "ack": {
+                    "$id": "#/properties/publicPayload/properties/ack",
+                    "type": "object",
+                    "title": "The ack schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "dateTime": "-1",
+                            "timeStampInMilliSeconds": "-1"
+                        }
+                    ],
+                    "required": [
+                        "dateTime",
+                        "timeStampInMilliSeconds"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                        "dateTime": {
+                            "$id": "#/properties/publicPayload/properties/ack/properties/dateTime",
+                            "type": "string",
+                            "title": "The dateTime schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "-1"
+                            ]
+                        },
+                        "timeStampInMilliSeconds": {
+                            "$id": "#/properties/publicPayload/properties/ack/properties/timeStampInMilliSeconds",
+                            "type": "string",
+                            "title": "The timeStampInMilliSeconds schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "-1"
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "dltData": {
+            "$id": "#/properties/dltData",
+            "type": "object",
+            "title": "The dltData schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "eventSource": "",
+                    "timeStamp": "",
+                    "validationResult": ""
+                }
+            ],
+            "required": [
+                "eventSource",
+                "timeStamp",
+                "validationResult"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "eventSource": {
+                    "$id": "#/properties/dltData/properties/eventSource",
+                    "type": "string",
+                    "title": "The eventSource schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        ""
+                    ]
+                },
+                "timeStamp": {
+                    "$id": "#/properties/dltData/properties/timeStamp",
+                    "type": "string",
+                    "title": "The timeStamp schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        ""
+                    ]
+                },
+                "validationResult": {
+                    "$id": "#/properties/dltData/properties/validationResult",
+                    "type": "string",
+                    "title": "The validationResult schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        ""
+                    ]
+                }
+            }
+        }
+    }
+}

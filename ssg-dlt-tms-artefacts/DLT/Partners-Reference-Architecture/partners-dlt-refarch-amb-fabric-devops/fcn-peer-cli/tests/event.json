@@ -1,0 +1,10 @@
+{
+    "jsonrpc": "2.0",
+    "method": "list-installed-chaincodes",
+    "params": {
+        "networkId": "n-XXX",
+        "memberId": "m-XXX",
+        "peerId": "nd-XXX"
+    },
+    "id": "1"
+}

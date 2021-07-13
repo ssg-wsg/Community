@@ -1,0 +1,7 @@
+{
+    "networkId": "n-XXX",
+    "memberId": "m-XXX",
+    "peerId": "nd-XXX",
+    "channelsNames": ["testnet"],
+    "chaincodesNames": ["grantcc"]
+}

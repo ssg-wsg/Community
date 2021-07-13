@@ -1,0 +1,738 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "header": {
+                "eventType": "Assessment",
+                "primaryKey": "TGS-0026008-ESS0118316H",
+                "secondaryKey": "10026",
+                "tertiaryKey": "-1",
+                "trainingPartnerUen": "T08GB0032G",
+                "trainingPartnerCode": "T08GB0032G-01",
+                "schemaLocation": "<TBC>",
+                "schemaVersion": "TGS_v1.0"
+            },
+            "payload": {
+                "assessment": {
+                    "action": "create",
+                    "trainingPartner": {
+                        "code": "T08GB0032G-01",
+                        "uen": "T08GB0032G"
+                    },
+                    "course": {
+                        "referenceNumber": "TGS-0026008-ES",
+                        "run": {
+                            "id": "10026"
+                        }
+                    },
+                    "trainee": {
+                        "idType": {
+                            "type": "NRIC"
+                        },
+                        "id": "S0118316H",
+                        "fullName": "Jon Chua"
+                    },
+                    "result": "Pass",
+                    "score": "80",
+                    "grade": "B",
+                    "assessmentDate": "2020-05-01",
+                    "skillCode": "TGS-414342-3423",
+                    "conferringInstitute": {
+                        "code": "T16GB0003C-01"
+                    }
+                }
+            },
+            "publicPayload": {
+                "tags": [
+                    "TBC"
+                ],
+                "source": {
+                    "dateTime": "2020-05-04 20:58:17",
+                    "timeStampInMilliSeconds": "1588597097880"
+                },
+                "ack": {
+                    "dateTime": "-1",
+                    "timeStampInMilliSeconds": "-1"
+                }
+            },
+            "dltData": {
+                "eventSource": "",
+                "timeStamp": "",
+                "validationResult": ""
+            }
+        }
+    ],
+    "required": [
+        "header",
+        "payload",
+        "publicPayload",
+        "dltData"
+    ],
+    "additionalProperties": true,
+    "properties": {
+        "header": {
+            "$id": "#/properties/header",
+            "type": "object",
+            "title": "The header schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "eventType": "Assessment",
+                    "primaryKey": "TGS-0026008-ESS0118316H",
+                    "secondaryKey": "10026",
+                    "tertiaryKey": "-1",
+                    "trainingPartnerUen": "T08GB0032G",
+                    "trainingPartnerCode": "T08GB0032G-01",
+                    "schemaLocation": "<TBC>",
+                    "schemaVersion": "TGS_v1.0"
+                }
+            ],
+            "required": [
+                "eventType",
+                "primaryKey",
+                "secondaryKey",
+                "tertiaryKey",
+                "trainingPartnerUen",
+                "trainingPartnerCode",
+                "schemaLocation",
+                "schemaVersion"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "eventType": {
+                    "$id": "#/properties/header/properties/eventType",
+                    "type": "string",
+                    "title": "The eventType schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "Assessment"
+                    ]
+                },
+                "primaryKey": {
+                    "$id": "#/properties/header/properties/primaryKey",
+                    "type": "string",
+                    "title": "The primaryKey schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "TGS-0026008-ESS0118316H"
+                    ]
+                },
+                "secondaryKey": {
+                    "$id": "#/properties/header/properties/secondaryKey",
+                    "type": "string",
+                    "title": "The secondaryKey schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "10026"
+                    ]
+                },
+                "tertiaryKey": {
+                    "$id": "#/properties/header/properties/tertiaryKey",
+                    "type": "string",
+                    "title": "The tertiaryKey schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "-1"
+                    ]
+                },
+                "trainingPartnerUen": {
+                    "$id": "#/properties/header/properties/trainingPartnerUen",
+                    "type": "string",
+                    "title": "The trainingPartnerUen schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "T08GB0032G"
+                    ]
+                },
+                "trainingPartnerCode": {
+                    "$id": "#/properties/header/properties/trainingPartnerCode",
+                    "type": "string",
+                    "title": "The trainingPartnerCode schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "T08GB0032G-01"
+                    ]
+                },
+                "schemaLocation": {
+                    "$id": "#/properties/header/properties/schemaLocation",
+                    "type": "string",
+                    "title": "The schemaLocation schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "<TBC>"
+                    ]
+                },
+                "schemaVersion": {
+                    "$id": "#/properties/header/properties/schemaVersion",
+                    "type": "string",
+                    "title": "The schemaVersion schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "TGS_v1.0"
+                    ]
+                }
+            }
+        },
+        "payload": {
+            "$id": "#/properties/payload",
+            "type": "object",
+            "title": "The payload schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "assessment": {
+                        "action": "create",
+                        "trainingPartner": {
+                            "code": "T08GB0032G-01",
+                            "uen": "T08GB0032G"
+                        },
+                        "course": {
+                            "referenceNumber": "TGS-0026008-ES",
+                            "run": {
+                                "id": "10026"
+                            }
+                        },
+                        "trainee": {
+                            "idType": {
+                                "type": "NRIC"
+                            },
+                            "id": "S0118316H",
+                            "fullName": "Jon Chua"
+                        },
+                        "result": "Pass",
+                        "score": "80",
+                        "grade": "B",
+                        "assessmentDate": "2020-05-01",
+                        "skillCode": "TGS-414342-3423",
+                        "conferringInstitute": {
+                            "code": "T16GB0003C-01"
+                        }
+                    }
+                }
+            ],
+            "required": [
+                "assessment"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "assessment": {
+                    "$id": "#/properties/payload/properties/assessment",
+                    "type": "object",
+                    "title": "The assessment schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "action": "create",
+                            "trainingPartner": {
+                                "code": "T08GB0032G-01",
+                                "uen": "T08GB0032G"
+                            },
+                            "course": {
+                                "referenceNumber": "TGS-0026008-ES",
+                                "run": {
+                                    "id": "10026"
+                                }
+                            },
+                            "trainee": {
+                                "idType": {
+                                    "type": "NRIC"
+                                },
+                                "id": "S0118316H",
+                                "fullName": "Jon Chua"
+                            },
+                            "result": "Pass",
+                            "score": "80",
+                            "grade": "B",
+                            "assessmentDate": "2020-05-01",
+                            "skillCode": "TGS-414342-3423",
+                            "conferringInstitute": {
+                                "code": "T16GB0003C-01"
+                            }
+                        }
+                    ],
+                    "required": [
+                        "action",
+                        "trainingPartner",
+                        "course",
+                        "trainee",
+                        "result",
+                        "score",
+                        "grade",
+                        "assessmentDate",
+                        "skillCode",
+                        "conferringInstitute"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                        "action": {
+                            "$id": "#/properties/payload/properties/assessment/properties/action",
+                            "type": "string",
+                            "title": "The action schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "create"
+                            ]
+                        },
+                        "trainingPartner": {
+                            "$id": "#/properties/payload/properties/assessment/properties/trainingPartner",
+                            "type": "object",
+                            "title": "The trainingPartner schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "code": "T08GB0032G-01",
+                                    "uen": "T08GB0032G"
+                                }
+                            ],
+                            "required": [
+                                "code",
+                                "uen"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "code": {
+                                    "$id": "#/properties/payload/properties/assessment/properties/trainingPartner/properties/code",
+                                    "type": "string",
+                                    "title": "The code schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "T08GB0032G-01"
+                                    ]
+                                },
+                                "uen": {
+                                    "$id": "#/properties/payload/properties/assessment/properties/trainingPartner/properties/uen",
+                                    "type": "string",
+                                    "title": "The uen schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "T08GB0032G"
+                                    ]
+                                }
+                            }
+                        },
+                        "course": {
+                            "$id": "#/properties/payload/properties/assessment/properties/course",
+                            "type": "object",
+                            "title": "The course schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "referenceNumber": "TGS-0026008-ES",
+                                    "run": {
+                                        "id": "10026"
+                                    }
+                                }
+                            ],
+                            "required": [
+                                "referenceNumber",
+                                "run"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "referenceNumber": {
+                                    "$id": "#/properties/payload/properties/assessment/properties/course/properties/referenceNumber",
+                                    "type": "string",
+                                    "title": "The referenceNumber schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "TGS-0026008-ES"
+                                    ]
+                                },
+                                "run": {
+                                    "$id": "#/properties/payload/properties/assessment/properties/course/properties/run",
+                                    "type": "object",
+                                    "title": "The run schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": {},
+                                    "examples": [
+                                        {
+                                            "id": "10026"
+                                        }
+                                    ],
+                                    "required": [
+                                        "id"
+                                    ],
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "id": {
+                                            "$id": "#/properties/payload/properties/assessment/properties/course/properties/run/properties/id",
+                                            "type": "string",
+                                            "title": "The id schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": "",
+                                            "examples": [
+                                                "10026"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "trainee": {
+                            "$id": "#/properties/payload/properties/assessment/properties/trainee",
+                            "type": "object",
+                            "title": "The trainee schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "idType": {
+                                        "type": "NRIC"
+                                    },
+                                    "id": "S0118316H",
+                                    "fullName": "Jon Chua"
+                                }
+                            ],
+                            "required": [
+                                "idType",
+                                "id",
+                                "fullName"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "idType": {
+                                    "$id": "#/properties/payload/properties/assessment/properties/trainee/properties/idType",
+                                    "type": "object",
+                                    "title": "The idType schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": {},
+                                    "examples": [
+                                        {
+                                            "type": "NRIC"
+                                        }
+                                    ],
+                                    "required": [
+                                        "type"
+                                    ],
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "type": {
+                                            "$id": "#/properties/payload/properties/assessment/properties/trainee/properties/idType/properties/type",
+                                            "type": "string",
+                                            "title": "The type schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": "",
+                                            "examples": [
+                                                "NRIC"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "id": {
+                                    "$id": "#/properties/payload/properties/assessment/properties/trainee/properties/id",
+                                    "type": "string",
+                                    "title": "The id schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "S0118316H"
+                                    ]
+                                },
+                                "fullName": {
+                                    "$id": "#/properties/payload/properties/assessment/properties/trainee/properties/fullName",
+                                    "type": "string",
+                                    "title": "The fullName schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "Jon Chua"
+                                    ]
+                                }
+                            }
+                        },
+                        "result": {
+                            "$id": "#/properties/payload/properties/assessment/properties/result",
+                            "type": "string",
+                            "title": "The result schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "Pass"
+                            ]
+                        },
+                        "score": {
+                            "$id": "#/properties/payload/properties/assessment/properties/score",
+                            "type": "string",
+                            "title": "The score schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "80"
+                            ]
+                        },
+                        "grade": {
+                            "$id": "#/properties/payload/properties/assessment/properties/grade",
+                            "type": "string",
+                            "title": "The grade schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "B"
+                            ]
+                        },
+                        "assessmentDate": {
+                            "$id": "#/properties/payload/properties/assessment/properties/assessmentDate",
+                            "type": "string",
+                            "title": "The assessmentDate schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "2020-05-01"
+                            ]
+                        },
+                        "skillCode": {
+                            "$id": "#/properties/payload/properties/assessment/properties/skillCode",
+                            "type": "string",
+                            "title": "The skillCode schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "TGS-414342-3423"
+                            ]
+                        },
+                        "conferringInstitute": {
+                            "$id": "#/properties/payload/properties/assessment/properties/conferringInstitute",
+                            "type": "object",
+                            "title": "The conferringInstitute schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "code": "T16GB0003C-01"
+                                }
+                            ],
+                            "required": [
+                                "code"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "code": {
+                                    "$id": "#/properties/payload/properties/assessment/properties/conferringInstitute/properties/code",
+                                    "type": "string",
+                                    "title": "The code schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "T16GB0003C-01"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "publicPayload": {
+            "$id": "#/properties/publicPayload",
+            "type": "object",
+            "title": "The publicPayload schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "tags": [
+                        "TBC"
+                    ],
+                    "source": {
+                        "dateTime": "2020-05-04 20:58:17",
+                        "timeStampInMilliSeconds": "1588597097880"
+                    },
+                    "ack": {
+                        "dateTime": "-1",
+                        "timeStampInMilliSeconds": "-1"
+                    }
+                }
+            ],
+            "required": [
+                "tags",
+                "source",
+                "ack"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "tags": {
+                    "$id": "#/properties/publicPayload/properties/tags",
+                    "type": "array",
+                    "title": "The tags schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        [
+                            "TBC"
+                        ]
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$id": "#/properties/publicPayload/properties/tags/items/anyOf/0",
+                                "type": "string",
+                                "title": "The first anyOf schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": "",
+                                "examples": [
+                                    "TBC"
+                                ]
+                            }
+                        ],
+                        "$id": "#/properties/publicPayload/properties/tags/items"
+                    }
+                },
+                "source": {
+                    "$id": "#/properties/publicPayload/properties/source",
+                    "type": "object",
+                    "title": "The source schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "dateTime": "2020-05-04 20:58:17",
+                            "timeStampInMilliSeconds": "1588597097880"
+                        }
+                    ],
+                    "required": [
+                        "dateTime",
+                        "timeStampInMilliSeconds"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                        "dateTime": {
+                            "$id": "#/properties/publicPayload/properties/source/properties/dateTime",
+                            "type": "string",
+                            "title": "The dateTime schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "2020-05-04 20:58:17"
+                            ]
+                        },
+                        "timeStampInMilliSeconds": {
+                            "$id": "#/properties/publicPayload/properties/source/properties/timeStampInMilliSeconds",
+                            "type": "string",
+                            "title": "The timeStampInMilliSeconds schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "1588597097880"
+                            ]
+                        }
+                    }
+                },
+                "ack": {
+                    "$id": "#/properties/publicPayload/properties/ack",
+                    "type": "object",
+                    "title": "The ack schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "dateTime": "-1",
+                            "timeStampInMilliSeconds": "-1"
+                        }
+                    ],
+                    "required": [
+                        "dateTime",
+                        "timeStampInMilliSeconds"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                        "dateTime": {
+                            "$id": "#/properties/publicPayload/properties/ack/properties/dateTime",
+                            "type": "string",
+                            "title": "The dateTime schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "-1"
+                            ]
+                        },
+                        "timeStampInMilliSeconds": {
+                            "$id": "#/properties/publicPayload/properties/ack/properties/timeStampInMilliSeconds",
+                            "type": "string",
+                            "title": "The timeStampInMilliSeconds schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "-1"
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "dltData": {
+            "$id": "#/properties/dltData",
+            "type": "object",
+            "title": "The dltData schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "eventSource": "",
+                    "timeStamp": "",
+                    "validationResult": ""
+                }
+            ],
+            "required": [
+                "eventSource",
+                "timeStamp",
+                "validationResult"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "eventSource": {
+                    "$id": "#/properties/dltData/properties/eventSource",
+                    "type": "string",
+                    "title": "The eventSource schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        ""
+                    ]
+                },
+                "timeStamp": {
+                    "$id": "#/properties/dltData/properties/timeStamp",
+                    "type": "string",
+                    "title": "The timeStamp schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        ""
+                    ]
+                },
+                "validationResult": {
+                    "$id": "#/properties/dltData/properties/validationResult",
+                    "type": "string",
+                    "title": "The validationResult schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        ""
+                    ]
+                }
+            }
+        }
+    }
+}

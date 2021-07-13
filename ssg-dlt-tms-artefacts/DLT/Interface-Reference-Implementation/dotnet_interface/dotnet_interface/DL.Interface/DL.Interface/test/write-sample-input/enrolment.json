@@ -1,0 +1,75 @@
+{
+  "header": {
+    "eventType": "Enrolment",
+    "primaryKey": "TGS-0026008-ESS0118316H",
+    "secondaryKey": "10026",
+    "tertiaryKey": "-1",
+    "trainingPartnerUen": "88878433B",
+    "trainingPartnerCode": "88878433B-01",
+    "schemaLocation": "../../../../../../schema-validation/enrolment/v0.5.json",
+    "schemaVersion": "TGS_v1.0"
+  },
+  "payload": {
+    "enrolment": {
+      "action": "create",
+      "trainingPartner": {
+        "code": "88878433B-01",
+        "uen": "88878433B"
+      },
+      "course": {
+        "referenceNumber": "TGS-0026008-ES",
+        "run": {
+          "id": "10026"
+        }
+      },
+      "trainee": {
+        "id": "S0118316H",
+        "idType": {
+          "type": "NRIC"
+        },
+        "dateOfBirth": "1950-10-16",
+        "fullName": "Jon Chua",
+        "contactNumber": {
+          "countryCode": "+65",
+          "areaCode": "00",
+          "phone": "88881234"
+        },
+        "emailAddress": "abc@abc.com",
+        "sponsorshipType": "EMPLOYER",
+        "employer": {
+          "uen": "G01234567S",
+          "contact": {
+            "fullName": "Stephen Chua",
+            "contactNumber": {
+              "countryCode": "+65",
+              "areaCode": "00",
+              "phoneNumber": "88881234"
+            },
+            "emailAddress": "x@test.com"
+          }
+        },
+        "enrolmentDate": "2020-05-01",
+        "fees": {
+          "discountAmount": "50.00",
+          "currencyType": "SGD"
+        }
+      }
+    }
+  },
+  "publicPayload": {
+    "tags": [ "TBC" ],
+    "source": {
+      "dateTime": "2020-05-04 20:58:17",
+      "timeStampInMilliSeconds": "1588597097880"
+    },
+    "ack": {
+      "dateTime": "-1",
+      "timeStampInMilliSeconds": "-1"
+    }
+  },
+  "dltData": {
+    "eventSource": "",
+    "timeStamp": "",
+    "validationResult": ""
+  }
+}

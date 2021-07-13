@@ -1,0 +1,20 @@
+{
+    "isMaster": false,
+    "logger": {
+        "level": "info"
+    },
+    "blockchain": {
+        "startBlock": "",
+        "endBlock": "",
+        "userName": "fabricuser3",
+        "maxEvenHubRetries": -1,
+        "channelName": "mychannel",
+        "peerId": "peer1"
+    },
+    "dynamodb": {
+        "tableName": "amb-blockchainWriteSet",
+        "profile": "default",
+        "region": "us-east-1",
+        "paginationIndex": "docType-index"
+    }
+}

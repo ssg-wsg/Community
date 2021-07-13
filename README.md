@@ -2,7 +2,7 @@
 INTRODUCTION
 ------------
 
-This repository contains guides to support your app development on SSG-WSG Developer Portal (https://developer.ssg-wsg.gov.sg). More guides will be added into this repository in the future.
+This repository contains references and guides to support your application development on SSG-WSG Developer Portal (https://developer.ssg-wsg.gov.sg). More guides will be added into this repository in the future.
 
 -----------------
 OTHER INFORMATION

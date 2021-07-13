@@ -1,0 +1,260 @@
+# Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License").
+# You may not use this file except in compliance with the License.
+# A copy of the License is located at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# or in the "license" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
+# permissions and limitations under the License.
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  This template creates a set of components necessary for running Amazon Managed Blockchain (AMB) DevOps
+  functions.
+Parameters:
+  AMBEndpointName:
+    Type: String
+    Description: Name of the AMB service's VPC Endpoint. Obtained from running 'aws managedblockchain get-network --network-id <NETWORK_ID>'
+
+Resources:
+  AMBDevOpsVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: True
+      EnableDnsHostnames: True
+      InstanceTenancy: default
+      Tags:
+        - Key: AMBDevOps
+          Value: VPC
+        - Key: Name
+          Value: !Sub "${AWS::StackName}-${AWS::Region}"
+
+  AMBDevOpsPrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AMBDevOpsVPC
+      MapPublicIpOnLaunch: false
+      AvailabilityZone: !Select
+        - 0
+        - Fn::GetAZs: !Ref "AWS::Region"
+      CidrBlock: 10.0.30.0/24
+      Tags:
+        - Key: AMBDevOps
+          Value: PrivateSubnet
+        - Key: Name
+          Value: !Sub "${AWS::StackName}PrivateSubnet1"
+  AMBDevOpsPrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AMBDevOpsVPC
+      MapPublicIpOnLaunch: false
+      AvailabilityZone: !Select
+        - 1
+        - Fn::GetAZs: !Ref "AWS::Region"
+      CidrBlock: 10.0.40.0/24
+      Tags:
+        - Key: AMBDevOps
+          Value: PrivateSubnet
+        - Key: Name
+          Value: !Sub "${AWS::StackName}PrivateSubnet2"
+  AMBDevOpsPrivateSubnet3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AMBDevOpsVPC
+      MapPublicIpOnLaunch: false
+      AvailabilityZone: !Select
+        - 2
+        - Fn::GetAZs: !Ref "AWS::Region"
+      CidrBlock: 10.0.50.0/24
+      Tags:
+        - Key: AMBDevOps
+          Value: PrivateSubnet
+        - Key: Name
+          Value: !Sub "${AWS::StackName}PrivateSubnet3"
+
+  AMBDevOpsSecurityGroupBase:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Base Security Group
+      VpcId: !Ref AMBDevOpsVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          CidrIp: 0.0.0.0/0
+          FromPort: 0
+          ToPort: 65535
+      Tags:
+        - Key: AMBDevOps
+          Value: BaseSecurityGroup
+        - Key: Name
+          Value: !Sub "${AWS::StackName}SecurityGroupBase"
+
+  AMBDevOpsSecurityGroupBaseIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      IpProtocol: -1
+      FromPort: -1
+      GroupId: !GetAtt AMBDevOpsSecurityGroupBase.GroupId
+      ToPort: -1
+      SourceSecurityGroupId: !GetAtt AMBDevOpsSecurityGroupBase.GroupId
+      Tags:
+        - Key: AMBDevOps
+          Value: BaseSecurityGroupIngress
+        - Key: Name
+          Value: !Sub "${AWS::StackName}SecurityGroupBaseIngress"
+
+  AMBDevOpsRouteTable1:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref AMBDevOpsVPC
+      Tags:
+        - Key: AMBDevOps
+          Value: RouteTable
+        - Key: Name
+          Value: !Sub "${AWS::StackName}RouteTable1"
+
+  AMBDevOpsSubnetRouteTable1Association:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AMBDevOpsPrivateSubnet1
+      RouteTableId: !Ref AMBDevOpsRouteTable1
+
+  AMBDevOpsRouteTable2:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref AMBDevOpsVPC
+      Tags:
+        - Key: AMBDevOps
+          Value: RouteTable
+        - Key: Name
+          Value: !Sub "${AWS::StackName}RouteTable2"
+
+  AMBDevOpsSubnetRouteTable2Association:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AMBDevOpsPrivateSubnet2
+      RouteTableId: !Ref AMBDevOpsRouteTable2
+
+  AMBDevOpsRouteTable3:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref AMBDevOpsVPC
+      Tags:
+        - Key: AMBDevOps
+          Value: RouteTable
+        - Key: Name
+          Value: !Sub "${AWS::StackName}RouteTable3"
+
+  AMBDevOpsSubnetRouteTable3Association:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AMBDevOpsPrivateSubnet3
+      RouteTableId: !Ref AMBDevOpsRouteTable3
+
+  AMBVPCEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBDevOpsVPC
+      PrivateDnsEnabled: True
+      ServiceName: !Ref AMBEndpointName
+      VpcEndpointType: Interface
+      SubnetIds:
+        - !Ref AMBDevOpsPrivateSubnet1
+        - !Ref AMBDevOpsPrivateSubnet2
+        - !Ref AMBDevOpsPrivateSubnet3
+      SecurityGroupIds: [!Ref AMBDevOpsSecurityGroupBase]
+
+  SecretsManagerEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBDevOpsVPC
+      PrivateDnsEnabled: True
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.secretsmanager"
+      VpcEndpointType: Interface
+      SubnetIds:
+        - !Ref AMBDevOpsPrivateSubnet1
+        - !Ref AMBDevOpsPrivateSubnet2
+        - !Ref AMBDevOpsPrivateSubnet3
+      SecurityGroupIds: [!Ref AMBDevOpsSecurityGroupBase]
+
+  SystemsManagerEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBDevOpsVPC
+      PrivateDnsEnabled: True
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ssm"
+      VpcEndpointType: Interface
+      SubnetIds:
+        - !Ref AMBDevOpsPrivateSubnet1
+        - !Ref AMBDevOpsPrivateSubnet2
+        - !Ref AMBDevOpsPrivateSubnet3
+      SecurityGroupIds: [!Ref AMBDevOpsSecurityGroupBase]
+
+  CodePipelineEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBDevOpsVPC
+      PrivateDnsEnabled: True
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.codepipeline"
+      VpcEndpointType: Interface
+      SubnetIds:
+        - !Ref AMBDevOpsPrivateSubnet1
+        - !Ref AMBDevOpsPrivateSubnet2
+        - !Ref AMBDevOpsPrivateSubnet3
+      SecurityGroupIds: [!Ref AMBDevOpsSecurityGroupBase]
+
+  S3Endpoint:
+    Type: "AWS::EC2::VPCEndpoint"
+    Properties:
+      RouteTableIds:
+        - !Ref AMBDevOpsRouteTable1
+        - !Ref AMBDevOpsRouteTable2
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.s3"
+      VpcId: !Ref AMBDevOpsVPC
+
+Outputs:
+  AMBDevOpsVPCID:
+    Description: VPC ID
+    Value: !Ref AMBDevOpsVPC
+    Export:
+      Name: !Sub "${AWS::StackName}-VPCID"
+  AMBDevOpsPrivateSubnet1ID:
+    Description: Private Subnet ID
+    Value: !Ref AMBDevOpsPrivateSubnet1
+    Export:
+      Name: !Sub "${AWS::StackName}-PrivateSubnet1ID"
+  AMBDevOpsPrivateSubnet2ID:
+    Description: Private Subnet ID
+    Value: !Ref AMBDevOpsPrivateSubnet2
+    Export:
+      Name: !Sub "${AWS::StackName}-PrivateSubnet2ID"
+  AMBDevOpsPrivateSubnet3ID:
+    Description: Private Subnet ID
+    Value: !Ref AMBDevOpsPrivateSubnet3
+    Export:
+      Name: !Sub "${AWS::StackName}-PrivateSubnet3ID"
+  AMBDevOpsSecurityGroupID:
+    Description: Security Group ID
+    Value: !GetAtt AMBDevOpsSecurityGroupBase.GroupId
+    Export:
+      Name: !Sub "${AWS::StackName}-SecurityGroupID"
+  AMBDevOpsAMBEndpoint:
+    Description: VPC Endpoint ID for Managed Blockchain Service
+    Value: !Ref AMBVPCEndpoint
+  AMBDevOpsSecretsManagerEndpoint:
+    Description: VPC Endpoint ID for Secrets Manager Service
+    Value: !Ref SecretsManagerEndpoint
+  AMBDevOpsSystemsManagerEndpoint:
+    Description: VPC Endpoint ID for Systems Manager Service
+    Value: !Ref SystemsManagerEndpoint
+  AMBDevOpsCodePipelineEndpoint:
+    Description: VPC Endpoint ID for CodePipeline Service
+    Value: !Ref CodePipelineEndpoint
+  AMBDevOpsS3Endpoint:
+    Description: >
+      VPC Endpoint ID for S3 Service. S3 stores chaincode build artifacts for CodePipeline and chaincode deployment scripts.
+    Value: !Ref S3Endpoint

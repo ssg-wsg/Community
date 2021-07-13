@@ -1,0 +1,8 @@
+{
+    "networkId": "n-XXX",
+    "memberId": "m-XXX",
+    "name": "user3",
+    "register": false,
+    "enroll": true,
+    "isAdmin": false
+}

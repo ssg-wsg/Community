@@ -1,0 +1,22 @@
+{
+    "isMaster": false,
+    "logger": {
+        "level": "debug"
+    },
+    "blockchain": {
+        "networkId": "n-EKZSRCFNN5HP5KYDDJAAYFKOKU",
+        "memberId": "m-DRE7CZKFUJCHJHMVKT773ANAJU",
+        "startBlock": "",
+        "endBlock": "",
+        "userName": "admin",
+        "maxEvenHubRetries": 10,
+        "channelName": "testnet",
+        "peerId": "nd-3GG4GQ3ZIBBWHMDKYDGD6QEGZA"
+    },
+    "dynamodb": {
+        "tableName": "amb-blockchainWriteSet",
+        "profile": "default",
+        "region": "us-east-1",
+        "paginationIndex": "docType-index"
+    }
+}

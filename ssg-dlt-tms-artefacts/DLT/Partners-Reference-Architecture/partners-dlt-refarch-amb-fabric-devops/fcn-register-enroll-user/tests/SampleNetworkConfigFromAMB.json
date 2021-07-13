@@ -1,0 +1,74 @@
+{
+    "network": {
+        "Id": "n-KCECJRDQNVCOFFCPS5CJ6HFUDA",
+        "Name": "NicksWorld",
+        "Description": null,
+        "Framework": "HYPERLEDGER_FABRIC",
+        "FrameworkVersion": "1.2",
+        "FrameworkAttributes": {
+            "Fabric": {
+                "OrderingServiceEndpoint": "orderer.n-kcecjrdqnvcoffcps5cj6hfuda.managedblockchain.us-east-1.amazonaws.com:30001",
+                "Edition": "STARTER"
+            }
+        },
+        "VpcEndpointServiceName": "com.amazonaws.us-east-1.managedblockchain.n-kcecjrdqnvcoffcps5cj6hfuda",
+        "VotingPolicy": {
+            "ApprovalThresholdPolicy": {
+                "ThresholdPercentage": 50,
+                "ProposalDurationInHours": 24,
+                "ThresholdComparator": "GREATER_THAN"
+            }
+        },
+        "Status": "AVAILABLE",
+        "CreationDate": "2019-10-10T10:50:26.951Z"
+    },
+    "members": {
+        "m-6BCEWEBGKRGT7GAMY6SGOCLAEI": {
+            "NetworkId": "n-KCECJRDQNVCOFFCPS5CJ6HFUDA",
+            "Id": "m-6BCEWEBGKRGT7GAMY6SGOCLAEI",
+            "Name": "Nik",
+            "Description": null,
+            "FrameworkAttributes": {
+                "Fabric": {
+                    "AdminUsername": "admin",
+                    "CaEndpoint": "ca.m-6bcewebgkrgt7gamy6sgoclaei.n-kcecjrdqnvcoffcps5cj6hfuda.managedblockchain.us-east-1.amazonaws.com:30002"
+                }
+            },
+            "Status": "AVAILABLE",
+            "CreationDate": "2019-10-10T10:50:27.226Z"
+        }
+    },
+    "peers": {
+        "nd-DWGEBTLKMRA7POIMBWAYA7ZJLA": {
+            "NetworkId": "n-KCECJRDQNVCOFFCPS5CJ6HFUDA",
+            "MemberId": "m-6BCEWEBGKRGT7GAMY6SGOCLAEI",
+            "Id": "nd-DWGEBTLKMRA7POIMBWAYA7ZJLA",
+            "InstanceType": "bc.t3.small",
+            "AvailabilityZone": "us-east-1a",
+            "FrameworkAttributes": {
+                "Fabric": {
+                    "PeerEndpoint": "nd-dwgebtlkmra7poimbwaya7zjla.m-6bcewebgkrgt7gamy6sgoclaei.n-kcecjrdqnvcoffcps5cj6hfuda.managedblockchain.us-east-1.amazonaws.com:30125",
+                    "PeerEventEndpoint": "nd-dwgebtlkmra7poimbwaya7zjla.m-6bcewebgkrgt7gamy6sgoclaei.n-kcecjrdqnvcoffcps5cj6hfuda.managedblockchain.us-east-1.amazonaws.com:30126"
+                }
+            },
+            "Status": "AVAILABLE",
+            "CreationDate": "2019-12-15T02:12:20.215Z"
+        },
+        "nd-UI6IHMTMAFG2ZO3HUFGU3HEAKA": {
+            "NetworkId": "n-KCECJRDQNVCOFFCPS5CJ6HFUDA",
+            "MemberId": "m-6BCEWEBGKRGT7GAMY6SGOCLAEI",
+            "Id": "nd-UI6IHMTMAFG2ZO3HUFGU3HEAKA",
+            "InstanceType": "bc.t3.small",
+            "AvailabilityZone": "us-east-1a",
+            "FrameworkAttributes": {
+                "Fabric": {
+                    "PeerEndpoint": "nd-ui6ihmtmafg2zo3hufgu3heaka.m-6bcewebgkrgt7gamy6sgoclaei.n-kcecjrdqnvcoffcps5cj6hfuda.managedblockchain.us-east-1.amazonaws.com:30069",
+                    "PeerEventEndpoint": "nd-ui6ihmtmafg2zo3hufgu3heaka.m-6bcewebgkrgt7gamy6sgoclaei.n-kcecjrdqnvcoffcps5cj6hfuda.managedblockchain.us-east-1.amazonaws.com:30070"
+                }
+            },
+            "Status": "AVAILABLE",
+            "CreationDate": "2019-11-19T11:04:55.430Z"
+        }
+    },
+    "ownedMemberId": "m-6BCEWEBGKRGT7GAMY6SGOCLAEI"
+}

@@ -1,0 +1,20 @@
+{
+    "networkId": "n-XXX",
+    "memberId": "m-XXX",
+    "channelName": "testnet",
+    "userEnrollmentId": "admin",
+    "chaincodeName": "grantcc",
+    "triggerType": "QUERY",
+    "functionName": "readDataWithPartialKeyAndPagination",
+    "args": [
+      {
+        "header": {
+          "eventType": "Enrolment",
+          "primaryKey": "TGS-XXXX01",
+          "secondaryKey": "88569",
+          "tertiaryKey": "1236",
+          "pageNumber": 1
+        }
+      }
+    ]
+  }

@@ -1,0 +1,71 @@
+dev:
+  awsProperties:
+    region: <region>
+    accessKey: <accessKey>
+    secretKey: <secretKey>
+
+  dltProperties:
+    networkId: <networkId>
+    memberId: <memberId>
+    enrolmentId: <enrolmentId>
+
+  sqsUrl: <sqsUrl>
+  lambdaChaincode: <lambdaChaincode>
+
+  keyStorage:
+    uri: mongodb://localhost:27017
+    keyDB: dltKey
+    keyCollection: orgKey
+
+  keyMgmtAPI:
+    url: http://localhost:3000
+    getEncryptDataKeyEndpoint: /getDataEncryptionKey
+    getDecryptDataKeyEndpoint: /getDataDecryptionKey
+
+uat:
+  awsProperties:
+    region: <region>
+    accessKey: <accessKey>
+    secretKey: <secretKey>
+
+  dltProperties:
+    networkId: <networkId>
+    memberId: <memberId>
+    enrolmentId: <enrolmentId>
+
+  sqsUrl: <sqsUrl>
+  lambdaChaincode: <lambdaChaincode>
+
+  keyStorage:
+    uri: mongodb://localhost:27017
+    keyDB: dltKey
+    keyCollection: orgKey
+
+  keyMgmtAPI:
+    url: http://localhost:3000
+    getEncryptDataKeyEndpoint: /getDataEncryptionKey
+    getDecryptDataKeyEndpoint: /getDataDecryptionKey
+
+prod:
+  awsProperties:
+    region: <region>
+    accessKey: <accessKey>
+    secretKey: <secretKey>
+
+  dltProperties:
+    networkId: <networkId>
+    memberId: <memberId>
+    enrolmentId: <enrolmentId>
+
+  sqsUrl: <sqsUrl>
+  lambdaChaincode: <lambdaChaincode>
+
+  keyStorage:
+    uri: mongodb://localhost:27017
+    keyDB: dltKey
+    keyCollection: orgKey
+
+  keyMgmtAPI:
+    url: http://localhost:3000
+    getEncryptDataKeyEndpoint: /getDataEncryptionKey
+    getDecryptDataKeyEndpoint: /getDataDecryptionKey

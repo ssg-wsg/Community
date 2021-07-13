@@ -1,0 +1,124 @@
+# Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License").
+# You may not use this file except in compliance with the License.
+# A copy of the License is located at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# or in the "license" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
+# permissions and limitations under the License.
+
+AWSTemplateFormatVersion: 2010-09-09
+Description:
+  Amazon Managed Blockchain. Creates a peer health check Lambda function,
+  and a CW scheduled event that triggers the Lambda. Alarms are published to SNS
+Transform: AWS::Serverless-2016-10-31
+Metadata:
+  LICENSE: Apache License Version 2.0
+Parameters:
+  AlarmSNSTopicName:
+    Type: String
+    Description: >
+      Name of the SNS topic to be triggered by the CloudWatch alarm.
+  AMBDevOpsLambdaFunctionsStackName:
+    Type: String
+    Description: >
+      ID if the private subnet with connectivity with AMB service. Lambda functions interacting with Hyperledger Fabric
+      managed by AMB will be instantiated in that network.
+  NetworkId:
+    Description:
+      The network ID of the Amazon Managed Blockchain network you want
+      to execute the health check against
+    Type: String
+  MemberId:
+    Description: The member ID you want to execute the health check against
+    Type: String
+  PeerStatus:
+    Description: List of peer statuses that trigger the alarm. AllowedValues "CREATING, AVAILABLE, CREATE_FAILED, DELETING, DELETED, FAILED".
+    Type: String
+    Default: "FAILED, CREATE_FAILED"
+    # AllowedValues:
+    #   - CREATING
+    #   - AVAILABLE
+    #   - CREATE_FAILED
+    #   - DELETING
+    #   - DELETED
+    #   - FAILED
+  NotificationEmail:
+    Description: Email address to send notifications to
+    Type: String
+Resources:
+  ScheduledRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: ScheduledRule
+      ScheduleExpression: rate(1 minute)
+      State: ENABLED
+      Targets:
+        - Arn:
+            Fn::ImportValue: !Sub "${AMBDevOpsLambdaFunctionsStackName}-PeerstatuscheckARN"
+          Id: AMBDevOpsPeerStatusCheckv1
+          Input:
+            Fn::Sub:
+              - "{\"networkId\": \"${NetworkId}\", \n \"memberId\": \"${MemberId}\", \n \"peerAlarmStatusesArray\": \"[${PeerStatus}]\", \n \"alarmSNSTopicARN\": \"${AlarmSNSTopicARN}\"}"
+              - AlarmSNSTopicARN: !Ref AlarmSNSTopic
+  PermissionForEventsToInvokeLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Fn::ImportValue: !Sub "${AMBDevOpsLambdaFunctionsStackName}-PeerstatuscheckARN"
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn:
+        Fn::GetAtt:
+          - ScheduledRule
+          - Arn
+  AlarmSNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Ref AlarmSNSTopicName
+      Subscription:
+        # - Protocol: email
+        #   Endpoint:
+        #     Ref: NotificationEmail
+        - Protocol: lambda
+          Endpoint:
+            Fn::ImportValue: !Sub "${AMBDevOpsLambdaFunctionsStackName}-PeerrecoveryARN"
+  SNSLambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      Principal: sns.amazonaws.com
+      SourceArn: !Ref AlarmSNSTopic
+      FunctionName:
+        Fn::ImportValue: !Sub "${AMBDevOpsLambdaFunctionsStackName}-PeerrecoveryARN"
+  # AlarmForPeerHealthcheckErrors:
+  #   Type: AWS::CloudWatch::Alarm
+  #   Properties:
+  #     AlarmActions:
+  #       - Ref: AlarmSNSTopic
+  #     ComparisonOperator: GreaterThanOrEqualToThreshold
+  #     Dimensions:
+  #       - Name: FunctionName
+  #         Value:
+  #           Fn::ImportValue: !Sub "${AMBDevOpsLambdaFunctionsStackName}-PeerstatuscheckARN"
+  #     EvaluationPeriods: 1
+  #     MetricName: Errors
+  #     Namespace: AWS/Lambda
+  #     Period: 60
+  #     Statistic: Sum
+  #     Threshold: "1"
+Outputs:
+  ScheduledRule:
+    Description: CW Scheduled Rule
+    Value:
+      Ref: ScheduledRule
+  AlarmSNSTopic:
+    Description: The SNS topic to publish alarm messages
+    Value:
+      Ref: AlarmSNSTopic
+    Export:
+      Name: !Sub "${AWS::StackName}-AlarmSNSTopic"

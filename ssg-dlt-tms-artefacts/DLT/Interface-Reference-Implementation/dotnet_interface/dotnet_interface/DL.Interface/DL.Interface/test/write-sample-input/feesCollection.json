@@ -1,0 +1,43 @@
+﻿{
+  "header": {
+    "eventType": "FeesCollection",
+    "primaryKey": "TGS-0026008-ESS0118316H",
+    "secondaryKey": "10026",
+    "tertiaryKey": "ENR-1912-000123",
+    "trainingPartnerUen": "88878433B",
+    "trainingPartnerCode": "88878433B-01",
+    "schemaLocation": "../../../../../../schema-validation/fees-collection/v0.5.json",
+    "schemaVersion": "TGS_v1.0"
+  },
+  "payload": {
+    "enrolment": {
+      "action": "update",
+      "trainingPartner": {
+        "code": "88878433B-01",
+        "uen": "88878433B"
+      },
+      "trainee": {
+        "fees": {
+          "collectionStatus": "pending payment"
+        }
+      },
+      "referenceNumber": "ENR-1912-000123"
+    }
+  },
+  "publicPayload": {
+    "tags": [ "TBC" ],
+    "source": {
+      "dateTime": "2020-05-04 20:58:17",
+      "timeStampInMilliSeconds": "1588597097880"
+    },
+    "ack": {
+      "dateTime": "-1",
+      "timeStampInMilliSeconds": "-1"
+    }
+  },
+  "dltData": {
+    "eventSource": "",
+    "timeStamp": "",
+    "validationResult": ""
+  }
+}

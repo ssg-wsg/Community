@@ -1,0 +1,20 @@
+{
+    "Records": [{
+        "EventSource": "aws:sns",
+        "EventVersion": "1.0",
+        "EventSubscriptionArn": "arn:aws:sns:us-east-1:081347416431:amb-devops-cloudWatch-GoldRush-AlarmSNSTopic-18AH21XTUA3PE:ba4a447a-a481-4a9c-88b7-5c65907fa550",
+        "Sns": {
+            "Type": "Notification",
+            "MessageId": "1964513d-c949-5c8b-ace4-079c1faefcdb",
+            "TopicArn": "arn:aws:sns:us-east-1:081347416431:amb-devops-cloudWatch-GoldRush-AlarmSNSTopic-18AH21XTUA3PE",
+            "Subject": "ALARM: \"NodeAvailability-nd-HSYVGI6VQZCCJL5E75AWKFUAHQ\" in US East (N. Virginia)",
+            "Message": "{\"AlarmName\":\"NodeAvailability-nd-HSYVGI6VQZCCJL5E75AWKFUAHQ\",\"AlarmDescription\":\"Alarm if managed blockchain peer node becomes UNAVAILABLE\",\"AWSAccountId\":\"081347416431\",\"NewStateValue\":\"ALARM\",\"NewStateReason\":\"Threshold Crossed: 1 datapoint [0.0 (22/01/20 04:49:00)] was less than the threshold (1.0).\",\"StateChangeTime\":\"2020-01-22T04:50:47.638+0000\",\"Region\":\"US East (N. Virginia)\",\"OldStateValue\":\"INSUFFICIENT_DATA\",\"Trigger\":{\"MetricName\":\"Availability\",\"Namespace\":\"custom/managedblockchain\",\"StatisticType\":\"Statistic\",\"Statistic\":\"SUM\",\"Unit\":null,\"Dimensions\":[{\"value\":\"true\",\"name\":\"AccountOwnsMember\"},{\"value\":\"m-DRE7CZKFUJCHJHMVKT773ANAJU\",\"name\":\"MemberId\"},{\"value\":\"us-east-1a\",\"name\":\"NodeAvailabilityZone\"},{\"value\":\"nd-HSYVGI6VQZCCJL5E75AWKFUAHQ\",\"name\":\"NodeId\"},{\"value\":\"n-EKZSRCFNN5HP5KYDDJAAYFKOKU\",\"name\":\"NetworkId\"},{\"value\":\"bc.t3.small\",\"name\":\"NodeInstanceType\"}],\"Period\":60,\"EvaluationPeriods\":1,\"ComparisonOperator\":\"LessThanThreshold\",\"Threshold\":1.0,\"TreatMissingData\":\"- TreatMissingData:                    missing\",\"EvaluateLowSampleCountPercentile\":\"\"}}",
+            "Timestamp": "2020-01-22T04:50:47.685Z",
+            "SignatureVersion": "1",
+            "Signature": "C7POM9D4DYoCuxKpk0qekupCxcY/YHPgj2S4RMRJdsRoI3BGdBxC/oSWut0H4EFMkXqLQhfroJvZRCfYo7vf7UNh7VHRWw+/lm17U/dwDJVK5Kmf3L4AiboxTodIbd5JoSWgdLJQXYYCRMpnWfhdHHe7VmaNPzJEMAhaaLqxz9qaG5t3ILX5/iVQrpbCgIpGCDceeBB9UA5OnJ8M9EYh3dQpIlM4Rzv7jB1MtIeob+XTq2GZgbqTUcaTsqDFdBOXXYOOfoh4x8+iSOhaZORo41aFqXCAanltxcBohxDBkgZavWYSF/DRFj2bnL0vdLNyf2UNz6cflMC2DmbnOEUs4A==",
+            "SigningCertUrl": "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-a86cb10b4e1f29c941702d737128f7b6.pem",
+            "UnsubscribeUrl": "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:081347416431:amb-devops-cloudWatch-GoldRush-AlarmSNSTopic-18AH21XTUA3PE:ba4a447a-a481-4a9c-88b7-5c65907fa550",
+            "MessageAttributes": {}
+        }
+    }]
+}

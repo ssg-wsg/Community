@@ -1,0 +1,948 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "header": {
+                "eventType": "Enrolment",
+                "primaryKey": "TGS-0026008-ESS0118316H",
+                "secondaryKey": "10026",
+                "tertiaryKey": "-1",
+                "trainingPartnerUen": "ORG00008UEN",
+                "trainingPartnerCode": "ORG00008UEN-18",
+                "schemaLocation": "src/test/resources/schema-validation/assessment/v0.4.json",
+                "schemaVersion": "TGS_v1.0"
+            },
+            "payload": {
+                "enrolment": {
+                    "action": "create",
+                    "trainingPartner": {
+                        "code": "ORG00008UEN-18",
+                        "uen": "ORG00008UEN"
+                    },
+                    "course": {
+                        "referenceNumber": "TGS-0026008-ES",
+                        "run": {
+                            "id": "10026"
+                        }
+                    },
+                    "trainee": {
+                        "id": "S0118316H",
+                        "idType": {
+                            "type": "NRIC"
+                        },
+                        "dateOfBirth": "1950-10-16",
+                        "fullName": "Jon Chua",
+                        "contactNumber": {
+                            "countryCode": 60,
+                            "areaCode": "00",
+                            "phone": 88881234
+                        },
+                        "emailAddress": "abc@abc.com",
+                        "sponsorshipType": "EMPLOYER",
+                        "employer": {
+                            "uen": "G01234567S",
+                            "contact": {
+                                "fullName": "Stephen Chua",
+                                "contactNumber": {
+                                    "countryCode": 60,
+                                    "areaCode": "00",
+                                    "phoneNumber": 88881234
+                                },
+                                "emailAddress": "x@test.com"
+                            }
+                        },
+                        "enrolmentDate": "2020-05-01"
+                    }
+                }
+            },
+            "publicPayload": {
+                "tags": [
+                    "TBC"
+                ],
+                "source": {
+                    "dateTime": "2020-05-04 20:58:17",
+                    "timeStampInMilliSeconds": "1588597097880"
+                },
+                "ack": {
+                    "dateTime": "-1",
+                    "timeStampInMilliSeconds": "-1"
+                }
+            },
+            "dltData": {
+                "eventSource": "",
+                "timeStamp": "",
+                "validationResult": ""
+            }
+        }
+    ],
+    "required": [
+        "header",
+        "payload",
+        "publicPayload",
+        "dltData"
+    ],
+    "additionalProperties": true,
+    "properties": {
+        "header": {
+            "$id": "#/properties/header",
+            "type": "object",
+            "title": "The header schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "eventType": "Enrolment",
+                    "primaryKey": "TGS-0026008-ESS0118316H",
+                    "secondaryKey": "10026",
+                    "tertiaryKey": "-1",
+                    "trainingPartnerUen": "ORG00008UEN",
+                    "trainingPartnerCode": "ORG00008UEN-18",
+                    "schemaLocation": "src/test/resources/schema-validation/assessment/v0.4.json",
+                    "schemaVersion": "TGS_v1.0"
+                }
+            ],
+            "required": [
+                "eventType",
+                "primaryKey",
+                "secondaryKey",
+                "tertiaryKey",
+                "trainingPartnerUen",
+                "trainingPartnerCode",
+                "schemaLocation",
+                "schemaVersion"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "eventType": {
+                    "$id": "#/properties/header/properties/eventType",
+                    "type": "string",
+                    "title": "The eventType schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "Enrolment"
+                    ]
+                },
+                "primaryKey": {
+                    "$id": "#/properties/header/properties/primaryKey",
+                    "type": "string",
+                    "title": "The primaryKey schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "TGS-0026008-ESS0118316H"
+                    ]
+                },
+                "secondaryKey": {
+                    "$id": "#/properties/header/properties/secondaryKey",
+                    "type": "string",
+                    "title": "The secondaryKey schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "10026"
+                    ]
+                },
+                "tertiaryKey": {
+                    "$id": "#/properties/header/properties/tertiaryKey",
+                    "type": "string",
+                    "title": "The tertiaryKey schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "-1"
+                    ]
+                },
+                "trainingPartnerUen": {
+                    "$id": "#/properties/header/properties/trainingPartnerUen",
+                    "type": "string",
+                    "title": "The trainingPartnerUen schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "ORG00008UEN"
+                    ]
+                },
+                "trainingPartnerCode": {
+                    "$id": "#/properties/header/properties/trainingPartnerCode",
+                    "type": "string",
+                    "title": "The trainingPartnerCode schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "ORG00008UEN-18"
+                    ]
+                },
+                "schemaLocation": {
+                    "$id": "#/properties/header/properties/schemaLocation",
+                    "type": "string",
+                    "title": "The schemaLocation schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "src/test/resources/schema-validation/assessment/v0.4.json"
+                    ]
+                },
+                "schemaVersion": {
+                    "$id": "#/properties/header/properties/schemaVersion",
+                    "type": "string",
+                    "title": "The schemaVersion schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "TGS_v1.0"
+                    ]
+                }
+            }
+        },
+        "payload": {
+            "$id": "#/properties/payload",
+            "type": "object",
+            "title": "The payload schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "enrolment": {
+                        "action": "create",
+                        "trainingPartner": {
+                            "code": "ORG00008UEN-18",
+                            "uen": "ORG00008UEN"
+                        },
+                        "course": {
+                            "referenceNumber": "TGS-0026008-ES",
+                            "run": {
+                                "id": "10026"
+                            }
+                        },
+                        "trainee": {
+                            "id": "S0118316H",
+                            "idType": {
+                                "type": "NRIC"
+                            },
+                            "dateOfBirth": "1950-10-16",
+                            "fullName": "Jon Chua",
+                            "contactNumber": {
+                                "countryCode": 60,
+                                "areaCode": "00",
+                                "phone": 88881234
+                            },
+                            "emailAddress": "abc@abc.com",
+                            "sponsorshipType": "EMPLOYER",
+                            "employer": {
+                                "uen": "G01234567S",
+                                "contact": {
+                                    "fullName": "Stephen Chua",
+                                    "contactNumber": {
+                                        "countryCode": 60,
+                                        "areaCode": "00",
+                                        "phoneNumber": 88881234
+                                    },
+                                    "emailAddress": "x@test.com"
+                                }
+                            },
+                            "enrolmentDate": "2020-05-01"
+                        }
+                    }
+                }
+            ],
+            "required": [
+                "enrolment"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "enrolment": {
+                    "$id": "#/properties/payload/properties/enrolment",
+                    "type": "object",
+                    "title": "The enrolment schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "action": "create",
+                            "trainingPartner": {
+                                "code": "ORG00008UEN-18",
+                                "uen": "ORG00008UEN"
+                            },
+                            "course": {
+                                "referenceNumber": "TGS-0026008-ES",
+                                "run": {
+                                    "id": "10026"
+                                }
+                            },
+                            "trainee": {
+                                "id": "S0118316H",
+                                "idType": {
+                                    "type": "NRIC"
+                                },
+                                "dateOfBirth": "1950-10-16",
+                                "fullName": "Jon Chua",
+                                "contactNumber": {
+                                    "countryCode": 60,
+                                    "areaCode": "00",
+                                    "phone": 88881234
+                                },
+                                "emailAddress": "abc@abc.com",
+                                "sponsorshipType": "EMPLOYER",
+                                "employer": {
+                                    "uen": "G01234567S",
+                                    "contact": {
+                                        "fullName": "Stephen Chua",
+                                        "contactNumber": {
+                                            "countryCode": 60,
+                                            "areaCode": "00",
+                                            "phoneNumber": 88881234
+                                        },
+                                        "emailAddress": "x@test.com"
+                                    }
+                                },
+                                "enrolmentDate": "2020-05-01"
+                            }
+                        }
+                    ],
+                    "required": [
+                        "action",
+                        "trainingPartner",
+                        "course",
+                        "trainee"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                        "action": {
+                            "$id": "#/properties/payload/properties/enrolment/properties/action",
+                            "type": "string",
+                            "title": "The action schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "create"
+                            ]
+                        },
+                        "trainingPartner": {
+                            "$id": "#/properties/payload/properties/enrolment/properties/trainingPartner",
+                            "type": "object",
+                            "title": "The trainingPartner schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "code": "ORG00008UEN-18",
+                                    "uen": "ORG00008UEN"
+                                }
+                            ],
+                            "required": [
+                                "code",
+                                "uen"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "code": {
+                                    "$id": "#/properties/payload/properties/enrolment/properties/trainingPartner/properties/code",
+                                    "type": "string",
+                                    "title": "The code schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "ORG00008UEN-18"
+                                    ]
+                                },
+                                "uen": {
+                                    "$id": "#/properties/payload/properties/enrolment/properties/trainingPartner/properties/uen",
+                                    "type": "string",
+                                    "title": "The uen schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "ORG00008UEN"
+                                    ]
+                                }
+                            }
+                        },
+                        "course": {
+                            "$id": "#/properties/payload/properties/enrolment/properties/course",
+                            "type": "object",
+                            "title": "The course schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "referenceNumber": "TGS-0026008-ES",
+                                    "run": {
+                                        "id": "10026"
+                                    }
+                                }
+                            ],
+                            "required": [
+                                "referenceNumber",
+                                "run"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "referenceNumber": {
+                                    "$id": "#/properties/payload/properties/enrolment/properties/course/properties/referenceNumber",
+                                    "type": "string",
+                                    "title": "The referenceNumber schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "TGS-0026008-ES"
+                                    ]
+                                },
+                                "run": {
+                                    "$id": "#/properties/payload/properties/enrolment/properties/course/properties/run",
+                                    "type": "object",
+                                    "title": "The run schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": {},
+                                    "examples": [
+                                        {
+                                            "id": "10026"
+                                        }
+                                    ],
+                                    "required": [
+                                        "id"
+                                    ],
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "id": {
+                                            "$id": "#/properties/payload/properties/enrolment/properties/course/properties/run/properties/id",
+                                            "type": "string",
+                                            "title": "The id schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": "",
+                                            "examples": [
+                                                "10026"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "trainee": {
+                            "$id": "#/properties/payload/properties/enrolment/properties/trainee",
+                            "type": "object",
+                            "title": "The trainee schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "id": "S0118316H",
+                                    "idType": {
+                                        "type": "NRIC"
+                                    },
+                                    "dateOfBirth": "1950-10-16",
+                                    "fullName": "Jon Chua",
+                                    "contactNumber": {
+                                        "countryCode": 60,
+                                        "areaCode": "00",
+                                        "phone": 88881234
+                                    },
+                                    "emailAddress": "abc@abc.com",
+                                    "sponsorshipType": "EMPLOYER",
+                                    "employer": {
+                                        "uen": "G01234567S",
+                                        "contact": {
+                                            "fullName": "Stephen Chua",
+                                            "contactNumber": {
+                                                "countryCode": 60,
+                                                "areaCode": "00",
+                                                "phoneNumber": 88881234
+                                            },
+                                            "emailAddress": "x@test.com"
+                                        }
+                                    },
+                                    "enrolmentDate": "2020-05-01"
+                                }
+                            ],
+                            "required": [
+                                "id",
+                                "idType",
+                                "dateOfBirth",
+                                "fullName",
+                                "contactNumber",
+                                "emailAddress",
+                                "sponsorshipType",
+                                "employer",
+                                "enrolmentDate"
+                            ],
+                            "additionalProperties": true,
+                            "properties": {
+                                "id": {
+                                    "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/id",
+                                    "type": "string",
+                                    "title": "The id schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "S0118316H"
+                                    ]
+                                },
+                                "idType": {
+                                    "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/idType",
+                                    "type": "object",
+                                    "title": "The idType schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": {},
+                                    "examples": [
+                                        {
+                                            "type": "NRIC"
+                                        }
+                                    ],
+                                    "required": [
+                                        "type"
+                                    ],
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "type": {
+                                            "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/idType/properties/type",
+                                            "type": "string",
+                                            "title": "The type schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": "",
+                                            "examples": [
+                                                "NRIC"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "dateOfBirth": {
+                                    "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/dateOfBirth",
+                                    "type": "string",
+                                    "title": "The dateOfBirth schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "1950-10-16"
+                                    ]
+                                },
+                                "fullName": {
+                                    "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/fullName",
+                                    "type": "string",
+                                    "title": "The fullName schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "Jon Chua"
+                                    ]
+                                },
+                                "contactNumber": {
+                                    "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/contactNumber",
+                                    "type": "object",
+                                    "title": "The contactNumber schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": {},
+                                    "examples": [
+                                        {
+                                            "countryCode": 60,
+                                            "areaCode": "00",
+                                            "phone": 88881234
+                                        }
+                                    ],
+                                    "required": [
+                                        "countryCode",
+                                        "areaCode",
+                                        "phone"
+                                    ],
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "countryCode": {
+                                            "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/contactNumber/properties/countryCode",
+                                            "type": "integer",
+                                            "title": "The countryCode schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": 0,
+                                            "examples": [
+                                                60
+                                            ]
+                                        },
+                                        "areaCode": {
+                                            "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/contactNumber/properties/areaCode",
+                                            "type": "string",
+                                            "title": "The areaCode schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": "",
+                                            "examples": [
+                                                "00"
+                                            ]
+                                        },
+                                        "phone": {
+                                            "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/contactNumber/properties/phone",
+                                            "type": "integer",
+                                            "title": "The phone schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": 0,
+                                            "examples": [
+                                                88881234
+                                            ]
+                                        }
+                                    }
+                                },
+                                "emailAddress": {
+                                    "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/emailAddress",
+                                    "type": "string",
+                                    "title": "The emailAddress schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "abc@abc.com"
+                                    ]
+                                },
+                                "sponsorshipType": {
+                                    "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/sponsorshipType",
+                                    "type": "string",
+                                    "title": "The sponsorshipType schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "EMPLOYER"
+                                    ]
+                                },
+                                "employer": {
+                                    "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/employer",
+                                    "type": "object",
+                                    "title": "The employer schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": {},
+                                    "examples": [
+                                        {
+                                            "uen": "G01234567S",
+                                            "contact": {
+                                                "fullName": "Stephen Chua",
+                                                "contactNumber": {
+                                                    "countryCode": 60,
+                                                    "areaCode": "00",
+                                                    "phoneNumber": 88881234
+                                                },
+                                                "emailAddress": "x@test.com"
+                                            }
+                                        }
+                                    ],
+                                    "required": [
+                                        "uen",
+                                        "contact"
+                                    ],
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "uen": {
+                                            "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/employer/properties/uen",
+                                            "type": "string",
+                                            "title": "The uen schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": "",
+                                            "examples": [
+                                                "G01234567S"
+                                            ]
+                                        },
+                                        "contact": {
+                                            "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/employer/properties/contact",
+                                            "type": "object",
+                                            "title": "The contact schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": {},
+                                            "examples": [
+                                                {
+                                                    "fullName": "Stephen Chua",
+                                                    "contactNumber": {
+                                                        "countryCode": 60,
+                                                        "areaCode": "00",
+                                                        "phoneNumber": 88881234
+                                                    },
+                                                    "emailAddress": "x@test.com"
+                                                }
+                                            ],
+                                            "required": [
+                                                "fullName",
+                                                "contactNumber",
+                                                "emailAddress"
+                                            ],
+                                            "additionalProperties": true,
+                                            "properties": {
+                                                "fullName": {
+                                                    "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/employer/properties/contact/properties/fullName",
+                                                    "type": "string",
+                                                    "title": "The fullName schema",
+                                                    "description": "An explanation about the purpose of this instance.",
+                                                    "default": "",
+                                                    "examples": [
+                                                        "Stephen Chua"
+                                                    ]
+                                                },
+                                                "contactNumber": {
+                                                    "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/employer/properties/contact/properties/contactNumber",
+                                                    "type": "object",
+                                                    "title": "The contactNumber schema",
+                                                    "description": "An explanation about the purpose of this instance.",
+                                                    "default": {},
+                                                    "examples": [
+                                                        {
+                                                            "countryCode": 60,
+                                                            "areaCode": "00",
+                                                            "phoneNumber": 88881234
+                                                        }
+                                                    ],
+                                                    "required": [
+                                                        "countryCode",
+                                                        "areaCode",
+                                                        "phoneNumber"
+                                                    ],
+                                                    "additionalProperties": true,
+                                                    "properties": {
+                                                        "countryCode": {
+                                                            "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/employer/properties/contact/properties/contactNumber/properties/countryCode",
+                                                            "type": "integer",
+                                                            "title": "The countryCode schema",
+                                                            "description": "An explanation about the purpose of this instance.",
+                                                            "default": 0,
+                                                            "examples": [
+                                                                60
+                                                            ]
+                                                        },
+                                                        "areaCode": {
+                                                            "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/employer/properties/contact/properties/contactNumber/properties/areaCode",
+                                                            "type": "string",
+                                                            "title": "The areaCode schema",
+                                                            "description": "An explanation about the purpose of this instance.",
+                                                            "default": "",
+                                                            "examples": [
+                                                                "00"
+                                                            ]
+                                                        },
+                                                        "phoneNumber": {
+                                                            "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/employer/properties/contact/properties/contactNumber/properties/phoneNumber",
+                                                            "type": "integer",
+                                                            "title": "The phoneNumber schema",
+                                                            "description": "An explanation about the purpose of this instance.",
+                                                            "default": 0,
+                                                            "examples": [
+                                                                88881234
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "emailAddress": {
+                                                    "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/employer/properties/contact/properties/emailAddress",
+                                                    "type": "string",
+                                                    "title": "The emailAddress schema",
+                                                    "description": "An explanation about the purpose of this instance.",
+                                                    "default": "",
+                                                    "examples": [
+                                                        "x@test.com"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "enrolmentDate": {
+                                    "$id": "#/properties/payload/properties/enrolment/properties/trainee/properties/enrolmentDate",
+                                    "type": "string",
+                                    "title": "The enrolmentDate schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "2020-05-01"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "publicPayload": {
+            "$id": "#/properties/publicPayload",
+            "type": "object",
+            "title": "The publicPayload schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "tags": [
+                        "TBC"
+                    ],
+                    "source": {
+                        "dateTime": "2020-05-04 20:58:17",
+                        "timeStampInMilliSeconds": "1588597097880"
+                    },
+                    "ack": {
+                        "dateTime": "-1",
+                        "timeStampInMilliSeconds": "-1"
+                    }
+                }
+            ],
+            "required": [
+                "tags",
+                "source",
+                "ack"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "tags": {
+                    "$id": "#/properties/publicPayload/properties/tags",
+                    "type": "array",
+                    "title": "The tags schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        [
+                            "TBC"
+                        ]
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$id": "#/properties/publicPayload/properties/tags/items/anyOf/0",
+                                "type": "string",
+                                "title": "The first anyOf schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": "",
+                                "examples": [
+                                    "TBC"
+                                ]
+                            }
+                        ],
+                        "$id": "#/properties/publicPayload/properties/tags/items"
+                    }
+                },
+                "source": {
+                    "$id": "#/properties/publicPayload/properties/source",
+                    "type": "object",
+                    "title": "The source schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "dateTime": "2020-05-04 20:58:17",
+                            "timeStampInMilliSeconds": "1588597097880"
+                        }
+                    ],
+                    "required": [
+                        "dateTime",
+                        "timeStampInMilliSeconds"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                        "dateTime": {
+                            "$id": "#/properties/publicPayload/properties/source/properties/dateTime",
+                            "type": "string",
+                            "title": "The dateTime schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "2020-05-04 20:58:17"
+                            ]
+                        },
+                        "timeStampInMilliSeconds": {
+                            "$id": "#/properties/publicPayload/properties/source/properties/timeStampInMilliSeconds",
+                            "type": "string",
+                            "title": "The timeStampInMilliSeconds schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "1588597097880"
+                            ]
+                        }
+                    }
+                },
+                "ack": {
+                    "$id": "#/properties/publicPayload/properties/ack",
+                    "type": "object",
+                    "title": "The ack schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "dateTime": "-1",
+                            "timeStampInMilliSeconds": "-1"
+                        }
+                    ],
+                    "required": [
+                        "dateTime",
+                        "timeStampInMilliSeconds"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                        "dateTime": {
+                            "$id": "#/properties/publicPayload/properties/ack/properties/dateTime",
+                            "type": "string",
+                            "title": "The dateTime schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "-1"
+                            ]
+                        },
+                        "timeStampInMilliSeconds": {
+                            "$id": "#/properties/publicPayload/properties/ack/properties/timeStampInMilliSeconds",
+                            "type": "string",
+                            "title": "The timeStampInMilliSeconds schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "-1"
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "dltData": {
+            "$id": "#/properties/dltData",
+            "type": "object",
+            "title": "The dltData schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "eventSource": "",
+                    "timeStamp": "",
+                    "validationResult": ""
+                }
+            ],
+            "required": [
+                "eventSource",
+                "timeStamp",
+                "validationResult"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "eventSource": {
+                    "$id": "#/properties/dltData/properties/eventSource",
+                    "type": "string",
+                    "title": "The eventSource schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        ""
+                    ]
+                },
+                "timeStamp": {
+                    "$id": "#/properties/dltData/properties/timeStamp",
+                    "type": "string",
+                    "title": "The timeStamp schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        ""
+                    ]
+                },
+                "validationResult": {
+                    "$id": "#/properties/dltData/properties/validationResult",
+                    "type": "string",
+                    "title": "The validationResult schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        ""
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,504 @@
+# Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License").
+# You may not use this file except in compliance with the License.
+# A copy of the License is located at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# or in the "license" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
+# permissions and limitations under the License.
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  This template creates a set of components necessary for running Amazon Managed Blockchain (AMB) Applications
+  functions.
+Parameters:
+  AMBEndpointName:
+    Type: String
+    Description: Name of the AMB service's VPC Endpoint. Obtained from running 'aws managedblockchain get-network --network-id <NETWORK_ID>'
+  AMBECRRegionName:
+    Type: String
+    Description: A name of a region where Elastic Container Repository (ECR) is located.
+    Default: us-east-1
+
+Resources:
+  AMBAppsVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.10.0.0/16
+      EnableDnsSupport: True
+      EnableDnsHostnames: True
+      InstanceTenancy: default
+      Tags:
+        - Key: AMBApps
+          Value: VPC
+        - Key: Name
+          Value: !Sub "${AWS::StackName}-${AWS::Region}"
+
+  # Two public subnets, where containers can have public IP addresses
+  # AMBAppsPublicSubnet1:
+  #   Type: AWS::EC2::Subnet
+  #   Properties:
+  #     AvailabilityZone:
+  #       Fn::Select:
+  #         - 0
+  #         - Fn::GetAZs: !Ref "AWS::Region"
+  #     VpcId: !Ref AMBAppsVPC
+  #     MapPublicIpOnLaunch: true
+  #     CidrBlock: 10.10.10.0/24
+  #     Tags:
+  #       - Key: AMBApps
+  #         Value: PublicSubnet
+  #       - Key: Name
+  #         Value: AMBAppsPublicSubnet1
+  # AMBAppsPublicSubnet2:
+  #   Type: AWS::EC2::Subnet
+  #   Properties:
+  #     AvailabilityZone:
+  #       Fn::Select:
+  #         - 1
+  #         - Fn::GetAZs: !Ref "AWS::Region"
+  #     VpcId: !Ref AMBAppsVPC
+  #     MapPublicIpOnLaunch: true
+  #     CidrBlock: 10.10.20.0/24
+  #     Tags:
+  #       - Key: AMBApps
+  #         Value: PublicSubnet
+  #       - Key: Name
+  #         Value: AMBAppsPublicSubnet2
+  # Two private subnets, where containers can not have public IP addresses
+  AMBAppsPrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AMBAppsVPC
+      MapPublicIpOnLaunch: false
+      AvailabilityZone: !Select
+        - 0
+        - Fn::GetAZs: !Ref "AWS::Region"
+      CidrBlock: 10.10.30.0/24
+      Tags:
+        - Key: AMBApps
+          Value: PrivateSubnet
+        - Key: Name
+          Value: !Sub "${AWS::StackName}PrivateSubnet1"
+
+  AMBAppsPrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AMBAppsVPC
+      MapPublicIpOnLaunch: false
+      AvailabilityZone: !Select
+        - 1
+        - Fn::GetAZs: !Ref "AWS::Region"
+      CidrBlock: 10.10.40.0/24
+      Tags:
+        - Key: AMBApps
+          Value: PrivateSubnet
+        - Key: Name
+          Value: !Sub "${AWS::StackName}PrivateSubnet2"
+
+  AMBAppsPrivateSubnet3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AMBAppsVPC
+      MapPublicIpOnLaunch: false
+      AvailabilityZone: !Select
+        - 2
+        - Fn::GetAZs: !Ref "AWS::Region"
+      CidrBlock: 10.10.50.0/24
+      Tags:
+        - Key: AMBApps
+          Value: PrivateSubnet
+        - Key: Name
+          Value: !Sub "${AWS::StackName}PrivateSubnet3"
+
+  # Setup networking resources for the public subnets. Containers
+  # in the public subnets have public IP addresses and the routing table
+  # sends network traffic via the internet gateway.
+  # AMBAppsInternetGateway:
+  #   Type: AWS::EC2::InternetGateway
+  # AMBAppsGatewayAttachement:
+  #   Type: AWS::EC2::VPCGatewayAttachment
+  #   Properties:
+  #     VpcId: !Ref "AMBAppsVPC"
+  #     InternetGatewayId: !Ref "AMBAppsInternetGateway"
+  # AMBAppsPublicRouteTable:
+  #   Type: AWS::EC2::RouteTable
+  #   Properties:
+  #     VpcId: !Ref "AMBAppsVPC"
+  # AMBAppsPublicRoute:
+  #   Type: AWS::EC2::Route
+  #   DependsOn: AMBAppsGatewayAttachement
+  #   Properties:
+  #     RouteTableId: !Ref "AMBAppsPublicRouteTable"
+  #     DestinationCidrBlock: "0.0.0.0/0"
+  #     GatewayId: !Ref "AMBAppsInternetGateway"
+  # AMBAppsPublicSubnet1RouteTableAssociation:
+  #   Type: AWS::EC2::SubnetRouteTableAssociation
+  #   Properties:
+  #     SubnetId: !Ref AMBAppsPublicSubnet1
+  #     RouteTableId: !Ref AMBAppsPublicRouteTable
+  # AMBAppsPublicSubnet2RouteTableAssociation:
+  #   Type: AWS::EC2::SubnetRouteTableAssociation
+  #   Properties:
+  #     SubnetId: !Ref AMBAppsPublicSubnet2
+  #     RouteTableId: !Ref AMBAppsPublicRouteTable
+
+  # Setup networking resources for the private subnets. Containers
+  # in these subnets have only private IP addresses, and must use a NAT
+  # gateway to talk to the internet. We launch two NAT gateways, one for
+  # each private subnet.
+  # AMBAppsNatGateway1Attachment:
+  #   Type: AWS::EC2::EIP
+  #   DependsOn: AMBAppsGatewayAttachement
+  #   Properties:
+  #     Domain: vpc
+  # AMBAppsNatGateway2Attachment:
+  #   Type: AWS::EC2::EIP
+  #   DependsOn: AMBAppsGatewayAttachement
+  #   Properties:
+  #     Domain: vpc
+  # AMBAppsNatGateway1:
+  #   Type: AWS::EC2::NatGateway
+  #   Properties:
+  #     AllocationId: !GetAtt AMBAppsNatGateway1Attachment.AllocationId
+  #     SubnetId: !Ref AMBAppsPublicSubnet1
+  # AMBAppsNatGateway2:
+  #   Type: AWS::EC2::NatGateway
+  #   Properties:
+  #     AllocationId: !GetAtt AMBAppsNatGateway2Attachment.AllocationId
+  #     SubnetId: !Ref AMBAppsPublicSubnet2
+  AMBAppsPrivateRouteTable1:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref "AMBAppsVPC"
+      Tags:
+        - Key: AMBApps
+          Value: RouteTable
+        - Key: Name
+          Value: !Sub "${AWS::StackName}RouteTable1"
+  # AMBAppsPrivateRoute1:
+  #   Type: AWS::EC2::Route
+  #   Properties:
+  #     RouteTableId: !Ref AMBAppsPrivateRouteTable1
+  #     DestinationCidrBlock: 0.0.0.0/0
+  #     NatGatewayId: !Ref AMBAppsNatGateway1
+  AMBAppsPrivateRouteTable1Association:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref AMBAppsPrivateRouteTable1
+      SubnetId: !Ref AMBAppsPrivateSubnet1
+  AMBAppsPrivateRouteTable2:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref "AMBAppsVPC"
+      Tags:
+        - Key: AMBApps
+          Value: RouteTable
+        - Key: Name
+          Value: !Sub "${AWS::StackName}RouteTable2"
+  # AMBAppsPrivateRoute2:
+  #   Type: AWS::EC2::Route
+  #   Properties:
+  #     RouteTableId: !Ref AMBAppsPrivateRouteTable2
+  #     DestinationCidrBlock: 0.0.0.0/0
+  #     NatGatewayId: !Ref AMBAppsNatGateway2
+  AMBAppsPrivateRouteTable2Association:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref AMBAppsPrivateRouteTable2
+      SubnetId: !Ref AMBAppsPrivateSubnet2
+  AMBAppsPrivateRouteTable3:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref "AMBAppsVPC"
+      Tags:
+        - Key: AMBApps
+          Value: RouteTable
+        - Key: Name
+          Value: !Sub "${AWS::StackName}RouteTable3"
+  # AMBAppsPrivateRoute2:
+  #   Type: AWS::EC2::Route
+  #   Properties:
+  #     RouteTableId: !Ref AMBAppsPrivateRouteTable3
+  #     DestinationCidrBlock: 0.0.0.0/0
+  #     NatGatewayId: !Ref AMBAppsNatGateway2
+  AMBAppsPrivateRouteTable3Association:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref AMBAppsPrivateRouteTable3
+      SubnetId: !Ref AMBAppsPrivateSubnet3
+
+  # A security group for the containers we will run in Fargate.
+  # Three rules, allowing network traffic from a public facing load
+  # balancer, a private internal load balancer, and from other members
+  # of the security group.
+  #
+  # Based on https://github.com/awslabs/aws-cloudformation-templates/blob/master/aws/services/ECS/FargateLaunchType/clusters/private-vpc.yml
+  AMBAppsSecurityGroupBase:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Access to the Fargate containers
+      VpcId: !Ref "AMBAppsVPC"
+      Tags:
+        - Key: AMBDevApps
+          Value: BaseSecurityGroup
+        - Key: Name
+          Value: !Sub "${AWS::StackName}SecurityGroupBase"
+  AMBAppsEcsSecurityGroupIngressFromSelf:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      Description: Ingress from other containers in the same security group
+      GroupId: !Ref "AMBAppsSecurityGroupBase"
+      IpProtocol: -1
+      SourceSecurityGroupId: !Ref "AMBAppsSecurityGroupBase"
+      Tags:
+        - Key: AMBDevApps
+          Value: BaseSecurityGroupIngress
+        - Key: Name
+          Value: !Sub "${AWS::StackName}SecurityGroupBaseIngress"
+
+  # AMBAppsSecurityGroupBase:
+  #   Type: AWS::EC2::SecurityGroup
+  #   Properties:
+  #     GroupDescription: Base Security Group
+  #     VpcId: !Ref AMBAppsVPC
+  #     SecurityGroupIngress:
+  #       - IpProtocol: tcp
+  #         CidrIp: 0.0.0.0/0
+  #         FromPort: 0
+  #         ToPort: 65535
+  #     Tags:
+  #       - Key: AMBApps
+  #         Value: BaseSecurityGroup
+  #       - Key: Name
+  #         Value: AMBAppsSecurityGroupBase
+
+  # AMBAppsSecurityGroupBaseIngress:
+  #   Type: AWS::EC2::SecurityGroupIngress
+  #   Properties:
+  #     IpProtocol: -1
+  #     FromPort: -1
+  #     GroupId: !GetAtt AMBAppsSecurityGroupBase.GroupId
+  #     ToPort: -1
+  #     SourceSecurityGroupId: !GetAtt AMBAppsSecurityGroupBase.GroupId
+  #     Tags:
+  #       - Key: AMBApps
+  #         Value: BaseSecurityGroupIngress
+  #       - Key: Name
+  #         Value: AMBAppsSecurityGroupBaseIngress
+
+  # AMBAppsRouteTable:
+  #   Type: AWS::EC2::RouteTable
+  #   Properties:
+  #     VpcId: !Ref AMBAppsVPC
+  #     Tags:
+  #       - Key: AMBApps
+  #         Value: RouteTable
+  #       - Key: Name
+  #         Value: AMBAppsRouteTable
+
+  # AMBAppsSubnet1RouteTableAssociation:
+  #   Type: AWS::EC2::SubnetRouteTableAssociation
+  #   Properties:
+  #     SubnetId: !Ref AMBAppsPrivateSubnet1
+  #     RouteTableId: !Ref AMBAppsRouteTable
+
+  # AMBAppsSubnet2RouteTableAssociation:
+  #   Type: AWS::EC2::SubnetRouteTableAssociation
+  #   Properties:
+  #     SubnetId: !Ref AMBAppsPrivateSubnet2
+  #     RouteTableId: !Ref AMBAppsRouteTable
+
+  AMBVPCEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPC
+      PrivateDnsEnabled: True
+      ServiceName: !Ref AMBEndpointName
+      VpcEndpointType: Interface
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1
+        - !Ref AMBAppsPrivateSubnet2
+        - !Ref AMBAppsPrivateSubnet3
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupBase]
+
+  SecretsManagerEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPC
+      PrivateDnsEnabled: True
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.secretsmanager"
+      VpcEndpointType: Interface
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1
+        - !Ref AMBAppsPrivateSubnet2
+        - !Ref AMBAppsPrivateSubnet3
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupBase]
+
+  SystemsManagerEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPC
+      PrivateDnsEnabled: True
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ssm"
+      VpcEndpointType: Interface
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1
+        - !Ref AMBAppsPrivateSubnet2
+        - !Ref AMBAppsPrivateSubnet3
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupBase]
+
+  SSMMessagesApiEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPC
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: true
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1
+        - !Ref AMBAppsPrivateSubnet2
+        - !Ref AMBAppsPrivateSubnet3
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ssmmessages"
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupBase]
+
+  ECREndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPC
+      PrivateDnsEnabled: True
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ecr.dkr"
+      VpcEndpointType: Interface
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1
+        - !Ref AMBAppsPrivateSubnet2
+        - !Ref AMBAppsPrivateSubnet3
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupBase]
+
+  ECRApiEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPC
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: true
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1
+        - !Ref AMBAppsPrivateSubnet2
+         - !Ref AMBAppsPrivateSubnet3
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ecr.api"
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupBase]
+
+  EC2ApiEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPC
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: true
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1
+        - !Ref AMBAppsPrivateSubnet2
+        - !Ref AMBAppsPrivateSubnet3
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ec2"
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupBase]
+
+  EC2MessagesApiEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPC
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: true
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1
+        - !Ref AMBAppsPrivateSubnet2
+        - !Ref AMBAppsPrivateSubnet3
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ec2messages"
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupBase]
+
+  LogsApiEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPC
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: true
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1
+        - !Ref AMBAppsPrivateSubnet2
+        - !Ref AMBAppsPrivateSubnet3
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.logs"
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupBase]
+
+  S3Endpoint:
+    Type: "AWS::EC2::VPCEndpoint"
+    Properties:
+      RouteTableIds:
+        - !Ref AMBAppsPrivateRouteTable1
+        - !Ref AMBAppsPrivateRouteTable2
+        - !Ref AMBAppsPrivateRouteTable3
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.s3"
+      VpcId: !Ref AMBAppsVPC
+
+  DynamoDBEndpoint:
+    Type: "AWS::EC2::VPCEndpoint"
+    Properties:
+      RouteTableIds:
+        - !Ref AMBAppsPrivateRouteTable1
+        - !Ref AMBAppsPrivateRouteTable2
+        - !Ref AMBAppsPrivateRouteTable3
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.dynamodb"
+      VpcId: !Ref AMBAppsVPC
+
+Outputs:
+  AMBAppsVPCID:
+    Description: VPC ID
+    Value: !Ref AMBAppsVPC
+    Export:
+      Name: !Sub "${AWS::StackName}-VPCID"
+  # AMBAppsPublicSubnet1ID:
+  #   Description: Private Subnet 1 ID
+  #   Value: !Ref AMBAppsPublicSubnet1
+  #   Export:
+  #     Name: !Sub "${AWS::StackName}-PublicSubnet1ID"
+  # AMBAppsPublicSubnet2ID:
+  #   Description: Private Subnet 2 ID
+  #   Value: !Ref AMBAppsPublicSubnet2
+  #   Export:
+  #     Name: !Sub "${AWS::StackName}-PublicSubnet2ID"
+  AMBAppsPrivateSubnet1ID:
+    Description: Private Subnet 1 ID
+    Value: !Ref AMBAppsPrivateSubnet1
+    Export:
+      Name: !Sub "${AWS::StackName}-PrivateSubnet1ID"
+  AMBAppsPrivateSubnet2ID:
+    Description: Private Subnet 2 ID
+    Value: !Ref AMBAppsPrivateSubnet2
+    Export:
+      Name: !Sub "${AWS::StackName}-PrivateSubnet2ID"
+  AMBAppsPrivateSubnet3ID:
+    Description: Private Subnet 3 ID
+    Value: !Ref AMBAppsPrivateSubnet3
+    Export:
+      Name: !Sub "${AWS::StackName}-PrivateSubnet3ID"
+  AMBAppsSecurityGroupID:
+    Description: Security Group ID
+    Value: !GetAtt AMBAppsSecurityGroupBase.GroupId
+    Export:
+      Name: !Sub "${AWS::StackName}-SecurityGroupID"
+  AMBAppsAMBEndpoint:
+    Description: VPC Endpoint ID for Managed Blockchain Service
+    Value: !Ref AMBVPCEndpoint
+  AMBAppsSecretsManagerEndpoint:
+    Description: VPC Endpoint ID for Secrets Manager Service
+    Value: !Ref SecretsManagerEndpoint
+  AMBAppsSystemsManagerEndpoint:
+    Description: VPC Endpoint ID for Systems Manager Service
+    Value: !Ref SystemsManagerEndpoint
+  AMBAppsDynamoDBEndpoint:
+    Description: VPC Endpoint ID for Systems Manager Service
+    Value: !Ref DynamoDBEndpoint
+  AMBAppsS3Endpoint:
+    Description: >
+      VPC Endpoint ID for S3 Service. S3 stores chaincode build artefacts for chaincode deployment scripts.
+    Value: !Ref S3Endpoint

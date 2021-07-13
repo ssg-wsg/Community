@@ -1,0 +1,8 @@
+{
+    "networkId": "n-XXX",
+    "memberId": "m-XXX",
+    "peerId": "nd-XXX",
+    "availabilityZone": "us-east-1a",
+    "instanceType": "bc.t3.small",
+    "accountOwnsMember": true
+}

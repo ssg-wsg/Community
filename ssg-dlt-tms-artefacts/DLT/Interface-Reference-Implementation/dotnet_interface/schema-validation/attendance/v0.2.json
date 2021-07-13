@@ -1,0 +1,365 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"$id": "http://example.com/example.json",
+	"type": "object",
+	"title": "The Root Schema",
+	"description": "The root schema comprises the entire JSON document.",
+	"required": [
+		"header",
+		"payload",
+		"publicPayload",
+		"dltData"
+	],
+	"properties": {
+		"header": {
+			"$id": "#/properties/header",
+			"type": "object",
+			"title": "The Header Schema",
+			"description": "An explanation about the purpose of this instance.",
+			"default": {},
+			"examples": [{
+				"eventType": "Attendance",
+				"tertiaryKey": "CRS-N-0041336-144-S1",
+				"schemaVersion": "TGS_v1.0",
+				"orgReferenceUEN": "ORG00008UEN",
+				"schemaLocation": "Location of the publicly assessible URL by SSG",
+				"secondaryKey": "41618",
+				"primaryKey1": "COURSE-1911BRA-12345",
+				"primaryKey2": "S123455"
+			}],
+			"required": [
+				"eventType",
+				"primaryKey1",
+				"primaryKey2",
+				"secondaryKey",
+				"tertiaryKey",
+				"orgReferenceUEN",
+				"schemaLocation",
+				"schemaVersion"
+			],
+			"properties": {
+				"eventType": {
+					"$id": "#/properties/header/properties/eventType",
+					"type": "string",
+					"title": "The Eventtype Schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": "",
+					"examples": [
+						"Attendance"
+					]
+				},
+				"primaryKey1": {
+					"$id": "#/properties/header/properties/primaryKey1",
+					"type": "string",
+					"title": "The Primarykey1 Schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": "",
+					"examples": [
+						"COURSE-1911BRA-12345"
+					]
+				},
+				"primaryKey2": {
+					"$id": "#/properties/header/properties/primaryKey2",
+					"type": "string",
+					"title": "The Primarykey2 Schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": "",
+					"examples": [
+						"S123455"
+					]
+				},
+				"secondaryKey": {
+					"$id": "#/properties/header/properties/secondaryKey",
+					"type": "string",
+					"title": "The Secondarykey Schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": "",
+					"examples": [
+						"41618"
+					]
+				},
+				"tertiaryKey": {
+					"$id": "#/properties/header/properties/tertiaryKey",
+					"type": "string",
+					"title": "The Tertiarykey Schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": "",
+					"examples": [
+						"CRS-N-0041336-144-S1"
+					]
+				},
+				"orgReferenceUEN": {
+					"$id": "#/properties/header/properties/orgReferenceUEN",
+					"type": "string",
+					"title": "The Orgreferenceuen Schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": "",
+					"examples": [
+						"ORG00008UEN"
+					]
+				},
+				"schemaLocation": {
+					"$id": "#/properties/header/properties/schemaLocation",
+					"type": "string",
+					"title": "The Schemalocation Schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": "",
+					"examples": [
+						"Location of the publicly assessible URL by SSG"
+					]
+				},
+				"schemaVersion": {
+					"$id": "#/properties/header/properties/schemaVersion",
+					"type": "string",
+					"title": "The Schemaversion Schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": "",
+					"examples": [
+						"TGS_v1.0"
+					]
+				}
+			}
+		},
+		"payload": {
+			"$id": "#/properties/payload",
+			"type": "object",
+			"title": "The Payload Schema",
+			"description": "An explanation about the purpose of this instance.",
+			"default": {},
+			"examples": [{
+				"course": {
+					"referenceNumber": "COURSE-1911BRA-12345",
+					"sessionId": "CRS-N-0041336-144-S1",
+					"runReferenceNumber": "41618"
+				},
+				"trainee": {
+					"id": "S123455"
+				},
+				"attendance": {
+					"status": "Confirmed",
+					"type": "Trainee",
+					"venue": {
+						"sessionPostalCode": "870626"
+					},
+					"formOfCollection": "Mobile"
+				}
+			}],
+			"required": [
+				"course",
+				"trainee",
+				"attendance"
+			],
+			"properties": {
+				"course": {
+					"$id": "#/properties/payload/properties/course",
+					"type": "object",
+					"title": "The Course Schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": {},
+					"examples": [{
+						"runReferenceNumber": "41618",
+						"referenceNumber": "COURSE-1911BRA-12345",
+						"sessionId": "CRS-N-0041336-144-S1"
+					}],
+					"required": [
+						"referenceNumber",
+						"runReferenceNumber",
+						"sessionId"
+					],
+					"properties": {
+						"referenceNumber": {
+							"$id": "#/properties/payload/properties/course/properties/referenceNumber",
+							"type": "string",
+							"title": "The Referencenumber Schema",
+							"description": "An explanation about the purpose of this instance.",
+							"default": "",
+							"examples": [
+								"COURSE-1911BRA-12345"
+							]
+						},
+						"runReferenceNumber": {
+							"$id": "#/properties/payload/properties/course/properties/runReferenceNumber",
+							"type": "string",
+							"title": "The Runreferencenumber Schema",
+							"description": "An explanation about the purpose of this instance.",
+							"default": "",
+							"examples": [
+								"41618"
+							]
+						},
+						"sessionId": {
+							"$id": "#/properties/payload/properties/course/properties/sessionId",
+							"type": "string",
+							"title": "The Sessionid Schema",
+							"description": "An explanation about the purpose of this instance.",
+							"default": "",
+							"examples": [
+								"CRS-N-0041336-144-S1"
+							]
+						}
+					}
+				},
+				"trainee": {
+					"$id": "#/properties/payload/properties/trainee",
+					"type": "object",
+					"title": "The Trainee Schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": {},
+					"examples": [{
+						"id": "S123455"
+					}],
+					"required": [
+						"id"
+					],
+					"properties": {
+						"id": {
+							"$id": "#/properties/payload/properties/trainee/properties/id",
+							"type": "string",
+							"title": "The Id Schema",
+							"description": "An explanation about the purpose of this instance.",
+							"default": "",
+							"examples": [
+								"S123455"
+							]
+						}
+					}
+				},
+				"attendance": {
+					"$id": "#/properties/payload/properties/attendance",
+					"type": "object",
+					"title": "The Attendance Schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": {},
+					"examples": [{
+						"formOfCollection": "Mobile",
+						"status": "Confirmed",
+						"type": "Trainee",
+						"venue": {
+							"sessionPostalCode": "870626"
+						}
+					}],
+					"required": [
+						"status",
+						"formOfCollection",
+						"type",
+						"venue"
+					],
+					"properties": {
+						"status": {
+							"$id": "#/properties/payload/properties/attendance/properties/status",
+							"type": "string",
+							"title": "The Status Schema",
+							"description": "An explanation about the purpose of this instance.",
+							"default": "",
+							"examples": [
+								"Confirmed"
+							]
+						},
+						"formOfCollection": {
+							"$id": "#/properties/payload/properties/attendance/properties/formOfCollection",
+							"type": "string",
+							"title": "The Formofcollection Schema",
+							"description": "An explanation about the purpose of this instance.",
+							"default": "",
+							"examples": [
+								"Mobile"
+							]
+						},
+						"type": {
+							"$id": "#/properties/payload/properties/attendance/properties/type",
+							"type": "string",
+							"title": "The Type Schema",
+							"description": "An explanation about the purpose of this instance.",
+							"default": "",
+							"examples": [
+								"Trainee"
+							]
+						},
+						"venue": {
+							"$id": "#/properties/payload/properties/attendance/properties/venue",
+							"type": "object",
+							"title": "The Venue Schema",
+							"description": "An explanation about the purpose of this instance.",
+							"default": {},
+							"examples": [{
+								"sessionPostalCode": "870626"
+							}],
+							"required": [
+								"sessionPostalCode"
+							],
+							"properties": {
+								"sessionPostalCode": {
+									"$id": "#/properties/payload/properties/attendance/properties/venue/properties/sessionPostalCode",
+									"type": "string",
+									"title": "The Sessionpostalcode Schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"870626"
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"publicPayload": {
+			"$id": "#/properties/publicPayload",
+			"type": "object",
+			"title": "The Publicpayload Schema",
+			"description": "An explanation about the purpose of this instance.",
+			"default": {},
+			"examples": [{}]
+		},
+		"dltData": {
+			"$id": "#/properties/dltData",
+			"type": "object",
+			"title": "The Dltdata Schema",
+			"description": "An explanation about the purpose of this instance.",
+			"default": {},
+			"examples": [{
+				"validationResult": "",
+				"eventSource": "",
+				"timeStamp": ""
+			}],
+			"required": [
+				"eventSource",
+				"timeStamp",
+				"validationResult"
+			],
+			"properties": {
+				"eventSource": {
+					"$id": "#/properties/dltData/properties/eventSource",
+					"type": "string",
+					"title": "The Eventsource Schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": "",
+					"examples": [
+						""
+					]
+				},
+				"timeStamp": {
+					"$id": "#/properties/dltData/properties/timeStamp",
+					"type": "string",
+					"title": "The Timestamp Schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": "",
+					"examples": [
+						""
+					]
+				},
+				"validationResult": {
+					"$id": "#/properties/dltData/properties/validationResult",
+					"type": "string",
+					"title": "The Validationresult Schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": "",
+					"examples": [
+						""
+					]
+				}
+			}
+		}
+	}
+}

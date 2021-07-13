@@ -1,0 +1,290 @@
+# Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License").
+# You may not use this file except in compliance with the License.
+# A copy of the License is located at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# or in the "license" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
+# permissions and limitations under the License.
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  This template creates a set of endpoints necessary for running Jumpstart Kit.
+Parameters:
+  AMBAppsVPCId:
+    Type: String
+    Description: ID of a VPC to connect to
+  AMBAppsSecurityGroupId:
+    Type: String
+    Description: Security group Id for target VPC
+  AMBAppsPrivateSubnet1Id:
+    Type: String
+    Description: Id of the first subnet in the target VPC.
+  AMBAppsPrivateSubnet2Id:
+    Type: String
+    Description: Id of a second subnet in the target VPC.
+  AMBAppsPrivateSubnet3Id:
+    Type: String
+    Description: Id of a third subnet in the target VPC.
+  AMBAppsPrivateRouteTable1Id:
+    Type: String
+    Description: Id of the first routing table in the target VPC.
+  AMBAppsPrivateRouteTable2Id:
+    Type: String
+    Description: Id of the second routing table in the target VPC.
+  AMBAppsPrivateRouteTable3Id:
+    Type: String
+    Description: Id of the third routing table in the target VPC.
+Conditions:
+  SecondPrivateSubnetExists:
+    Fn::Not:
+      - Fn::Equals:
+          - ""
+          - !Ref AMBAppsPrivateSubnet2Id
+  SecondPrivateRoutingTableExists:
+    Fn::Not:
+      - Fn::Equals:
+          - ""
+          - !Ref AMBAppsPrivateRouteTable2Id
+  ThirdPrivateSubnetExists:
+    Fn::Not:
+      - Fn::Equals:
+          - ""
+          - !Ref AMBAppsPrivateSubnet3Id
+  ThirdPrivateRoutingTableExists:
+    Fn::Not:
+      - Fn::Equals:
+          - ""
+          - !Ref AMBAppsPrivateRouteTable3Id
+Resources:
+  # AMBVPCEndpoint:
+  #   Type: AWS::EC2::VPCEndpoint
+  #   Properties:
+  #     VpcId: !Ref AMBAppsVPCId
+  #     PrivateDnsEnabled: True
+  #     ServiceName: !Ref AMBEndpointName
+  #     VpcEndpointType: Interface
+  #     SubnetIds:
+  #       - !Ref AMBAppsPrivateSubnet1Id
+  #       - Fn::If:
+  #           - SecondPrivateSubnetExists
+  #           - !Ref AMBAppsPrivateSubnet2Id
+  #           - !Ref "AWS::NoValue"
+  #     SecurityGroupIds: [!Ref AMBAppsSecurityGroupId]
+
+  SecretsManagerEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPCId
+      PrivateDnsEnabled: True
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.secretsmanager"
+      VpcEndpointType: Interface
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1Id
+        - Fn::If:
+            - SecondPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet2Id
+            - !Ref "AWS::NoValue"
+        - Fn::If:
+            - ThirdPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet3Id
+            - !Ref "AWS::NoValue"
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupId]
+
+  SystemsManagerEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPCId
+      PrivateDnsEnabled: True
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ssm"
+      VpcEndpointType: Interface
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1Id
+        - Fn::If:
+            - SecondPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet2Id
+            - !Ref "AWS::NoValue"
+        - Fn::If:
+            - ThirdPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet3Id
+            - !Ref "AWS::NoValue"
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupId]
+
+  SSMMessagesApiEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPCId
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: true
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1Id
+        - Fn::If:
+            - SecondPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet2Id
+            - !Ref "AWS::NoValue"
+        - Fn::If:
+            - ThirdPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet3Id
+            - !Ref "AWS::NoValue"
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ssmmessages"
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupId]
+
+  ECREndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPCId
+      PrivateDnsEnabled: True
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ecr.dkr"
+      VpcEndpointType: Interface
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1Id
+        - Fn::If:
+            - SecondPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet2Id
+            - !Ref "AWS::NoValue"
+        - Fn::If:
+            - ThirdPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet3Id
+            - !Ref "AWS::NoValue"
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupId]
+
+  ECRApiEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPCId
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: true
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1Id
+        - Fn::If:
+            - SecondPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet2Id
+            - !Ref "AWS::NoValue"
+        - Fn::If:
+            - ThirdPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet3Id
+            - !Ref "AWS::NoValue"
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ecr.api"
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupId]
+
+  EC2ApiEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPCId
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: true
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1Id
+        - Fn::If:
+            - SecondPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet2Id
+            - !Ref "AWS::NoValue"
+        - Fn::If:
+            - ThirdPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet3Id
+            - !Ref "AWS::NoValue"
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ec2"
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupId]
+
+  EC2MessagesApiEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPCId
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: true
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1Id
+        - Fn::If:
+            - SecondPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet2Id
+            - !Ref "AWS::NoValue"
+        - Fn::If:
+            - ThirdPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet3Id
+            - !Ref "AWS::NoValue"
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ec2messages"
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupId]
+
+  LogsApiEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref AMBAppsVPCId
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: true
+      SubnetIds:
+        - !Ref AMBAppsPrivateSubnet1Id
+        - Fn::If:
+            - SecondPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet2Id
+            - !Ref "AWS::NoValue"
+        - Fn::If:
+            - ThirdPrivateSubnetExists
+            - !Ref AMBAppsPrivateSubnet3Id
+            - !Ref "AWS::NoValue"
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.logs"
+      SecurityGroupIds: [!Ref AMBAppsSecurityGroupId]
+
+  S3Endpoint:
+    Type: "AWS::EC2::VPCEndpoint"
+    Properties:
+      RouteTableIds:
+        - !Ref AMBAppsPrivateRouteTable1Id
+        - Fn::If:
+            - SecondPrivateRoutingTableExists
+            - !Ref AMBAppsPrivateRouteTable2Id
+            - !Ref "AWS::NoValue"
+        - Fn::If:
+            - ThirdPrivateRoutingTableExists
+            - !Ref AMBAppsPrivateRouteTable3Id
+            - !Ref "AWS::NoValue"
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.s3"
+      VpcId: !Ref AMBAppsVPCId
+
+  DynamoDBEndpoint:
+    Type: "AWS::EC2::VPCEndpoint"
+    Properties:
+      RouteTableIds:
+        - !Ref AMBAppsPrivateRouteTable1Id
+        - Fn::If:
+            - ThirdPrivateRoutingTableExists
+            - !Ref AMBAppsPrivateRouteTable3Id
+            - !Ref "AWS::NoValue"
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.dynamodb"
+      VpcId: !Ref AMBAppsVPCId
+
+Outputs:
+  AMBAppsSecretsManagerEndpointId:
+    Description: VPC Endpoint ID for Secrets Manager Service
+    Value: !Ref SecretsManagerEndpoint
+  AMBAppsSystemsManagerEndpointId:
+    Description: VPC Endpoint ID for Systems Manager Service
+    Value: !Ref SystemsManagerEndpoint
+  SSMMessagesApiEndpointId:
+    Description: VPC Endpoint ID for Systems Manager Messaging API (required for Fargate)
+    Value: !Ref SSMMessagesApiEndpoint
+  ECREndpointId:
+    Description: VPC Endpoint ID for Elastic Container Repository Service (required for Fargate)
+    Value: !Ref ECREndpoint
+  ECRApiEndpointId:
+    Description: VPC Endpoint ID for Elastic Container Repository Service API (required for Fargate)
+    Value: !Ref ECRApiEndpoint
+  EC2ApiEndpointId:
+    Description: VPC Endpoint ID for EC2 API (required for Fargate)
+    Value: !Ref EC2ApiEndpoint
+  EC2MessagesApiEndpointId:
+    Description: VPC Endpoint ID for EC2 Messages (required for Fargate)
+    Value: !Ref EC2MessagesApiEndpoint
+  LogsApiEndpointId:
+    Description: VPC Endpoint ID for Logs Service (required for Fargate)
+    Value: !Ref LogsApiEndpoint
+  AMBAppsDynamoDBEndpointId:
+    Description: VPC Endpoint ID for DynamoDB Service
+    Value: !Ref DynamoDBEndpoint
+  AMBAppsS3EndpointId:
+    Description: >
+      VPC Endpoint ID for S3 Service. S3 stores chaincode build artefacts for CodePipeline and chaincode deployment scripts.
+    Value: !Ref S3Endpoint

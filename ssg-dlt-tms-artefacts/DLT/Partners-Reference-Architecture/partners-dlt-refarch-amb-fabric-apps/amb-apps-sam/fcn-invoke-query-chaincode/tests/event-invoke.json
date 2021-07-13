@@ -1,0 +1,38 @@
+{
+    "networkId": "n-XXX",
+    "memberId": "m-XXX",
+    "channelName": "testnet",
+    "userEnrollmentId": "admin",
+    "chaincodeName": "grantcc",
+    "triggerType": "INVOKE",
+    "functionName": "createDLTEvent",
+    "args": [
+      {
+        "header": {
+          "eventType": "Enrolment",
+          "primaryKey": "TGS-XXXX01",
+          "secondaryKey": "88571",
+          "tertiaryKey": "1236",
+          "trainingPartnerUen": "99978444P",
+          "trainingPartnerCode": "99978444P",
+          "schemaLocation": "<TBC>",
+          "schemaVersion": "TGS_v1.0"
+        },
+        "payload": {
+          "dataKey": "DYzm62ZWk6RUQ1eigPcTz4oNTlCwJWN63u32LnAx+eE=",
+          "iv": "Tz9q0PG630ueaH5Txf1mWQ==",
+          "record": "CLrkc2EhKmUHGZg4cThFrY4SyM87nKAyc46fvMPiVhrcB5gYxflQUPJRlZwycjFrNdcsfkXXVeDrIayjzqKOFVZhLrfBHbIzcboZ6FJwaWmW0oWceMnRWpJB795Pxe/o/LezwOZFuUb6xZ9vg3xXvD/LH96AI7Y+u42C+WuaGFCC+OxcGZi6FATeR31nW5hv+0u60711Ooiq5lIAjpArdJgl5H4yOLxer2UeAD451Wj0UE0Li7RVMCrFCb+mkYx9ZBXTOAENOKtEKXWwQwTwAiKbG0iMl2JYB80VbATJsdRjOc6fUOMrWnuDhwnmbe1XG1U1GaXEXJz+dPHjGMbuo2VWwmgi5gSUP04+e6Psf/VDvAjmrhYoCnAhOomZ5nfXKOa1f+mTMp/Gk/bM3oKE6PlxLzYZRTZzJkXhiN3XWTub5qM5K/wsE8KO2CBsnXIfHj0FevZgVMTkpz8fit42/o3ZPNlhN2N1EuiyOwv0sDmcW4PGbwPRggMSk8b4gvelleera3+L/pMSCw+wyST1FrD7ZnIN0C6JBmjsLrFmgJt+2wx6AnaU1QYJp6k9s8hjlDVpXWim24/eGApE9MAp4VeJUPP/UEKJFhFqzROcv0NYMz6DyHYx8ugsaes2psFjOOVhDImUR6bOzc1w0CSxnWlHrQhTA5omzP1eld1dCdRKcUwjdY/wb+ZteEPrnjddgI+jxUVuDLT05YGDkhGYRcd/ZARpAqCdgu2VzaiYwY7N6+YPQehDJ7BbXcUTB/2QIKaE5yZjmFReSRpMktcW2AzghF1kw4vt1YHhw0rthonseu+N+0PjC785Naexyxt1Q23LJHgGiuYFkXcm/ihVkmEKnI6s/eBPXQs1lv4WwQq0wKj8niAqs6qzVJFDcMfMYIu6aTPAIAe3YmYpgsUpllWojIa6SdReGFwwkTpQ6WYtlWQTCpQPWp1mlt5BPAyy"
+        },
+        "publicPayload": {
+          "tags": [
+            "TBC"
+          ]
+        },
+        "dltData": {
+          "eventSource": "",
+          "timeStamp": "",
+          "validationResult": ""
+        }
+      }
+    ]
+  }

@@ -1,0 +1,23 @@
+{
+  "name": "amb-synchronizer",
+  "version": "1.0.0",
+  "description": "App to sync write set from Hyperledger Fabric block events to DynamoDB",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "startDebug": "HFC_LOGGING='{\"debug\":\"console\",\"info\":\"console\"}' GRPC_VERBOSITY=debug node app.js",
+    "startDebugAll": "HFC_LOGGING='{\"debug\":\"console\",\"info\":\"console\"}' GRPC_VERBOSITY=debug GRPC_TRACE=transport_security,connectivity_state node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vlason@amazon.com",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "config": "^3.2.2",
+    "fabric-client": "~1.4.0",
+    "aws-sdk": "^2.494.0",
+    "fs-extra": "^8.1.0",
+    "log4js": "^3.0.6",
+    "unzipper": "^0.10.5",
+    "yaml": "^1.7.2"
+  }
+}

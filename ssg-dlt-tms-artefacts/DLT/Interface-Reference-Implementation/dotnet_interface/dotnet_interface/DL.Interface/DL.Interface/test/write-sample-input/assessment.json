@@ -1,0 +1,58 @@
+﻿{
+  "header": {
+    "eventType": "Assessment",
+    "primaryKey": "TGS-0026008-ESS0118316I",
+    "secondaryKey": "10026",
+    "tertiaryKey": "-1",
+    "trainingPartnerUen": "88878433B",
+    "trainingPartnerCode": "88878433B-01",
+    "schemaLocation": "../../../../../../schema-validation/assessment/v0.5.json",
+    "schemaVersion": "TGS_v1.0"
+  },
+  "payload": {
+    "assessment": {
+      "action": "create",
+      "trainingPartner": {
+        "code": "88878433B-01",
+        "uen": "88878433B"
+      },
+      "course": {
+        "referenceNumber": "TGS-0026008-ES",
+        "run": {
+          "id": "10026"
+        }
+      },
+      "trainee": {
+        "idType": {
+          "type": "NRIC"
+        },
+        "id": "S0118316I",
+        "fullName": "Jon Chua"
+      },
+      "result": "Pass",
+      "score": "80",
+      "grade": "B",
+      "assessmentDate": "2020-05-01",
+      "skillCode": "TGS-414342-3423",
+      "conferringInstitute": {
+        "code": "T16GB0003C-01"
+      }
+    }
+  },
+  "publicPayload": {
+    "tags": [ "TBC" ],
+    "source": {
+      "dateTime": "2020-05-04 20:58:17",
+      "timeStampInMilliSeconds": "1588597097880"
+    },
+    "ack": {
+      "dateTime": "-1",
+      "timeStampInMilliSeconds": "-1"
+    }
+  },
+  "dltData": {
+    "eventSource": "",
+    "timeStamp": "",
+    "validationResult": ""
+  }
+}

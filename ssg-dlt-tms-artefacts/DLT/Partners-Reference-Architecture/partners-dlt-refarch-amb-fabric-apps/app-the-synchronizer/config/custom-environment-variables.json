@@ -1,0 +1,22 @@
+{
+    "isMaster": "AMB_APPS_SYNC_IS_MASTER",
+    "logger": {
+        "level": "AMB_APPS_SYNC_LOG_LEVEL"
+    },
+    "blockchain": {
+        "networkId": "AMB_APPS_SYNC_BC_NETWORK_ID",
+        "memberId": "AMB_APPS_SYNC_BC_MEMBER_ID",
+        "userName": "AMB_APPS_SYNC_BC_USER_NAME",
+        "channelName": "AMB_APPS_SYNC_BC_CHANNEL_NAME",
+        "peerId": "AMB_APPS_SYNC_BC_PEER_ID",
+        "startBlock": "AMB_APPS_SYNC_BC_START_BLOCK",
+        "endBlock": "AMB_APPS_SYNC_BC_END_BLOCK",
+        "maxEvenHubRetries": "AMB_APPS_SYNC_BC_MAX_EVENT_HUB_RETRIES"
+    },
+    "dynamodb": {
+        "tableName": "AMB_APPS_SYNC_DYNAMO_TABLE_NAME",
+        "profile": "AMB_APPS_SYNC_DYNAMO_PROFILE_NAME",
+        "region": "AMB_APPS_SYNC_DYNAMO_REGION",
+        "paginationIndex": "AMB_APPS_SYNC_DYNAMO_PAGINATION_INDEX"
+    }
+}
